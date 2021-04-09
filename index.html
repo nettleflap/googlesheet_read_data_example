@@ -104,15 +104,10 @@
        * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
        */
       function listMajors() {
-        var sheet;
-        var request = gapi.client.sheets.spreadsheets.get({
+        gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
-          ranges: [],
+          range: 'Sheet2!A2:E10'
         }).then(function(response) {
-          sheet = response.sheets[1];
-        });
-        
-        gapi.client.sheets.spreadsheets.values.get(sheet).then(function(response) {
           var range = response.result;
           if (range.values.length > 0) {
             appendPre('Name, Major:');

@@ -106,7 +106,8 @@
       function listMajors() {
         var sheet;
         var request = gapi.client.sheets.spreadsheets.get({
-          spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM'
+          spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
+          ranges: [A1],
         }).then(function(response) {
           sheet = response.sheets[1];
         });

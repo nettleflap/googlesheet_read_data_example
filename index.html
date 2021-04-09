@@ -100,8 +100,8 @@
 
       function listMajors() {
         gapi.client.sheets.spreadsheets.values.get({
-          spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
-          range: 'RGG1 Stats!B1:B3'
+          spreadsheetId: '1k99XmhMYohSbFoW-PlnaQx8UehQZFmB28266Ei7Zcss',
+          range: 'Sheet 1!B1:B3'
         }).then(function(response) {
           var range = response.result;
           if (range.values.length > 0) {

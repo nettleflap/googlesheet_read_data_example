@@ -73,7 +73,7 @@
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
           signoutButton.style.display = 'block';
-          setInterval(listMajors(), 2);
+          setInterval(listMajors, 3000);
         } else {
           authorizeButton.style.display = 'block';
           signoutButton.style.display = 'none';

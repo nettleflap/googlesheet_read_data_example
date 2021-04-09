@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>UPDATE 4</title>
+    <title>UPDATE 5</title>
     <meta charset="utf-8" />
   </head>
   <body style="background-color:black;">
-  <body>
+  <body onload="myFunction()">
     <p style="color:white" id="myText"></p>
     
     <script>
       var string = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR2CI01JQATPl8b9JodSIooPmDgQWyjuwQhqrCivVnx4qoGCo32f1ZfOZMba3NCAeSJpnr33ls7ZKgl/pubhtml/default/public/values";
       
-      window.onload = function() {
+      myFunction() {
         document.getElementById("myText").value = "Johnny Bravo";
       }
     </script>

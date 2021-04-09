@@ -73,9 +73,7 @@
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
           signoutButton.style.display = 'block';
-          listMajors();
-          slideshowData();
-          setInterval(slideshowData, 2000);
+          fetchDataStartSlideshow();
         } else {
           authorizeButton.style.display = 'block';
           signoutButton.style.display = 'none';
@@ -102,12 +100,14 @@
 
       var data = null;
       
-      function listMajors() {
+      function fetchDataStartSlideshow() {
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1k99XmhMYohSbFoW-PlnaQx8UehQZFmB28266Ei7Zcss',
           range: 'Sheet1!B1:B3'
         }).then(function(response) {
           data = response.result;
+          slideshowData();
+          setInterval(slideshowData, 2000);
         }, function(response) {
           setText('Error: ' + response.result.error.message);
         });

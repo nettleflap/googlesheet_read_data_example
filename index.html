@@ -119,6 +119,7 @@
                         'Total games rerolled: '];
       
       function slideshowData(){
+        console.log(slideshowIndex);
         setText(dataTitles[slideshowIndex] + data.values[slideshowIndex]);
         slideshowIndex = (slideshowIndex+1) % data.length;
       }

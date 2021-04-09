@@ -108,8 +108,14 @@
        * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
        */
       function listMajors() {
+        var params = {
+          spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
+        };
+        var request = gapi.client.sheets.spreadsheets.get(params);
+        var sheet = request.sheets[1];
+        
         gapi.client.sheets.spreadsheets.values.get({
-          spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM/edit#gid=454416957',
+          spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
           range: 'B1',
         }).then(function(response) {
           var range = response.result;

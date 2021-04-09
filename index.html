@@ -6,10 +6,6 @@
   </head>
   <body style="background-color:black">
     <p style="color:white">TMR RGG2 TOOLS</p>
-    
-    <form>
-      <input type="text" id="fname" name="fname" value="John"><br>
-    </form>
 
     <!--Add buttons to initiate auth sequence and sign out-->
     <button id="authorize_button" style="display: none;">Authorize</button>
@@ -114,10 +110,7 @@
         var request = gapi.client.sheets.spreadsheets.get(params);
         var sheet = request.sheets[1];
         
-        gapi.client.sheets.spreadsheets.values.get({
-          spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
-          range: 'B1',
-        }).then(function(response) {
+        gapi.client.sheets.spreadsheets.values.get(sheet).then(function(response) {
           var range = response.result;
           if (range.values.length > 0) {
             appendPre('Name, Major:');

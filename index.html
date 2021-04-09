@@ -102,8 +102,8 @@
         }).then(function(response) {
           var range = response.result;
           if (range.values.length > 0) {
-            setText('Total games completed: ' + range.values[0] + '\n' + 
-                    'Total games dropped: ' + range.values[1] + '\n' +
+            setText('Total games completed: ' + range.values[0] + '<br>' + 
+                    'Total games dropped: ' + range.values[1] + '<br>' +
                     'Total games rerolled: ' + range.values[2]);
           } else {
             

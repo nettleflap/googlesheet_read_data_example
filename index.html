@@ -8,17 +8,23 @@
   <style style="text/css">
     p {
       font-family: "Press Start 2P", sans-serif;
+      color:white;
     }
   </style>
   
   <body style="background-color:black">
-    <p style="color:white">TMR RGG2 INFO SLIDESHOW</p>
+    <p>TMR RGG2 INFO SLIDESHOW</p>
 
     <!--Add buttons to initiate auth sequence and sign out-->
     <button id="authorize_button" style="display: none;">Authorize</button>
     <button id="signout_button" style="display: none;">Sign Out</button>
-
-    <p id="content" style="color:white;"></p>
+    
+    <p id="content"></p>
+    <br>
+    <form>
+      <label for="fname">Time between slides:</label>
+      <input type="text" id="fname" name="fname" onchange="changeSlideshowTime()" value="2000">
+    </form>
 
     <script type="text/javascript">
       // Client ID and API key from the Developer Console
@@ -99,6 +105,7 @@
       }
 
       var data = null;
+      var slideshowInterval;
       
       function fetchDataStartSlideshow() {
         gapi.client.sheets.spreadsheets.values.get({
@@ -107,7 +114,7 @@
         }).then(function(response) {
           data = response.result;
           slideshowData();
-          setInterval(slideshowData, 2000);
+          slideshowInterval = setInterval(slideshowData, 2000);
         }, function(response) {
           setText('Error: ' + response.result.error.message);
         });
@@ -121,6 +128,11 @@
       function slideshowData(){
         setText(dataTitles[slideshowIndex] + data.values[slideshowIndex]);
         slideshowIndex = (slideshowIndex+1) % data.values.length;
+      }
+      
+      function changeSlideshowTime(){
+        clearInterval(slideshowInterval);
+        slideshowInterval = setInterval(slideshowData, document.getElementById('fname').value * 1000);
       }
 
     </script>

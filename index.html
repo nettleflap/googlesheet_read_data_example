@@ -98,9 +98,9 @@
         }).then(function(response) {
           var totalGamesCompleted = response.result;
           if (totalGamesCompleted.values.length > 0) {
-            setText('Total games completed: ' + totalGamesCompleted.toString());
+            setText('Total games completed: ' + totalGamesCompleted.values[0]);
           } else {
-            setText('No data found.');
+            
           }
         }, function(response) {
           setText('Error: ' + response.result.error.message);

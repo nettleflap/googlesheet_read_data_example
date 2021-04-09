@@ -100,14 +100,14 @@
         document.getElementById('content').innerHTML = text;
       }
 
-      var range;
+      var data = null;
       
       function listMajors() {
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1k99XmhMYohSbFoW-PlnaQx8UehQZFmB28266Ei7Zcss',
           range: 'Sheet1!B1:B3'
         }).then(function(response) {
-          range = response.result;
+          data = response.result;
         }, function(response) {
           setText('Error: ' + response.result.error.message);
         });
@@ -119,8 +119,8 @@
                         'Total games rerolled: '];
       
       function slideshowData(){
-        setText(dataTitles[slideshowIndex] + range.values[slideshowIndex]);
-        slideshowIndex = (slideshowIndex+1) % range.length;
+        setText(dataTitles[slideshowIndex] + data.values[slideshowIndex]);
+        slideshowIndex = (slideshowIndex+1) % data.length;
       }
 
     </script>

@@ -105,10 +105,9 @@
        */
       function listMajors() {
         var sheet;
-        var params = {
-          spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
-        };
-        var request = gapi.client.sheets.spreadsheets.get(params).then(function(response) {
+        var request = gapi.client.sheets.spreadsheets.get({
+          spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM'
+        }).then(function(response) {
           sheet = response.sheets[1];
         });
         

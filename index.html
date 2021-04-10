@@ -298,17 +298,9 @@
       }
       
       function setSpins(){
-        console.log(rgg2statsRaw.valueRanges[10].values.length);
-        for (var i = 0; i < rgg2statsRaw.valueRanges[10].values.length; i++){
-          if (rgg2statsRaw.valueRanges[10].values[i] != ''){
-            continue;
-          } else {
-            var text = 'Wheel was spun ' + i-1 + ' times! <i>Right round baby right round!</i>';
-            addRemoveFromDataArray(document.getElementById('spins').checked, rgg2statsData, text);
-            rebuildFinalList();
-            break;
-          }
-        }
+        var text = 'Wheel was spun ' + rgg2statsRaw.valueRanges[10].values.length + ' times! <i>Right round baby right round!</i>';
+        addRemoveFromDataArray(document.getElementById('spins').checked, rgg2statsData, text);
+        rebuildFinalList();
       }
       
       function addRemoveFromDataArray(check, array, text){

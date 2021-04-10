@@ -30,6 +30,7 @@
     #frame {
       background-color:black;
       height: 200px;
+      width: 800px;
     }
     
     body {
@@ -63,6 +64,12 @@
       <br>
       <label for="bgcolor">Background color:</label>
       <input type="color" id="bgcolor" name="bgcolor" onchange="changeBackgroundColor()" value="#000000">
+      <br>
+      <label for="fwidth">Width:</label>
+      <input type="text" id="fwidth" name="fwidth" onchange="changeFrameWidth()" value="800">
+      <br>
+      <label for="fheight">Height:</label>
+      <input type="text" id="fheight" name="fheight" onchange="changeFrameHeight()" value="200">
     </form>
 
     <script type="text/javascript">
@@ -109,7 +116,7 @@
       function fetchDataStartSlideshow() {
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
-          range: 'RGG1 Stats!B1:B3'
+          range: 'RGG2 Stats!B1:B2'
         }).then(function(response) {
           data = response.result;
           slideshowData();
@@ -120,9 +127,8 @@
       }
       
       var slideshowIndex = 0;
-      var dataTitles = ['Total games completed: ',
-                        'Total games dropped: ',
-                        'Total games rerolled: '];
+      var dataTitles = ['Games beaten: ',
+                        'Games dropped: '];
       
       function slideshowData(){
         setText(dataTitles[slideshowIndex] + data.values[slideshowIndex]);
@@ -140,6 +146,14 @@
       
       function changeBackgroundColor(){
         document.getElementById('frame').style.backgroundColor = document.getElementById('bgcolor').value;
+      }
+      
+      function changeFrameWidth(){
+        document.getElementById('frame').style.width = document.getElementById('fwidth').value;
+      }
+      
+      function changeFrameHeight(){
+        document.getElementById('frame').style.height = document.getElementById('fheight').value;
       }
 
     </script>

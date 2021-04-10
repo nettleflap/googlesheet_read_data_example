@@ -273,7 +273,7 @@
         });
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1vTkpd5OxriydMk9L7z4PU07DAhuJ_VVHh1nx0yyfqT0',
-          range: 'Games!B'
+          range: 'Games!B:C'
         }).then(function(response) {
           subListRaw = response.result;
           slideshowData();

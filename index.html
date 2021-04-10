@@ -31,12 +31,12 @@
       background-color:black;
       height: 200px;
       width: 800px;
+      margin: auto;
     }
     
     body {
       background-color:black;
       margin: auto;
-      width: 50%;
       text-align: center;
     }
   </style>
@@ -149,11 +149,11 @@
       }
       
       function changeFrameWidth(){
-        document.getElementById('frame').style.width = document.getElementById('fwidth').value;
+        document.getElementById('frame').style.width = document.getElementById('fwidth').value + 'px';
       }
       
       function changeFrameHeight(){
-        document.getElementById('frame').style.height = document.getElementById('fheight').value;
+        document.getElementById('frame').style.height = document.getElementById('fheight').value + 'px';
       }
 
     </script>

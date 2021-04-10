@@ -107,6 +107,9 @@
       <label for="shortestgame">Shortest game</label>
       <input type="checkbox" id="shortestgame" name="shortestgame" onchange="setShortestGame()" checked>
       <br>
+      <label for="platformspecifics">Platform specifics</label>
+      <input type="checkbox" id="platformspecifics" name="platformspecifics" onchange="setPlatformSpecifics()" checked>
+      
       <label for="dosgamescompleted">DOS games completed</label>
       <input type="checkbox" id="dosgamescompleted" name="dosgamescompleted" onchange="setDOSGamesCompleted()" checked>
       <br>
@@ -264,7 +267,9 @@
                    'RGG2 Stats!F3',
                    'RGG2 Stats!C4',
                    'RGG2 Stats!D4',
-                   'RGG2 Stats!F4']
+                   'RGG2 Stats!F4',
+                   'RGG2 Stats!B5:B52',
+                   'RGG2 Stats!D5:D52']
         }).then(function(response) {
           rgg2statsRaw = response.result;
           
@@ -276,6 +281,7 @@
           setAverageTime();
           setLongestGame();
           setShortestGame();
+          setPlatformSpecifics();
           
           slideshowData();
           slideshowInterval = setInterval(slideshowData, 2000);
@@ -369,6 +375,15 @@
       function setShortestGame(){
         var text = rgg2statsRaw.valueRanges[5].values[0] + ' (' + rgg2statsRaw.valueRanges[7].values[0] + ') was the shortest game to beat with a time of ' + rgg2statsRaw.valueRanges[6].values[0] + '!';
         addRemoveFromDataArray(document.getElementById('shortestgame').checked, rgg2statsData, text);
+        rebuildFinalList();
+      }
+
+      function setPlatformSpecifics(){
+        var platforms = ['DOS','C64','NES','MSX','SMS','Amiga','TG16','GEN','GBC','GG','SNES','NEO GEO','PS1','N64','GBA','SUB'];
+        for (int i=0; i<16; i++){
+          var text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + platforms[i] + ' games were beaten. A(n) ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average. ' + rgg2statsRaw.valueRanges[9].values[0 + i*3] + ' spent on ' + platforms[i] + ' games in total.';
+          addRemoveFromDataArray(document.getElementById('platformspecifics').checked, rgg2statsData, text);
+        }
         rebuildFinalList();
       }
       

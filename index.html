@@ -257,7 +257,7 @@
       function fetchDataStartSlideshow() {
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
-          range: 'RGG2 Stats!B1:B4!D1:D3!F3!D4!F4!B5!D5!B8!D8!B11!D11!B14!D14!B17!D17!B20!D20!B23!D23!B26!D26!B29!D29!B32!D32!B35!D35!B38!D38!B41!D41!B44!D44!B47!D47!B50!D50'
+          range: 'RGG2 Stats!B1:B4 D1:D3 F3 D4 F4 B5 D5 B8 D8 B11 D11 B14 D14 B17 D17 B20 D20 B23 D23 B26 D26 B29 D29 B32 D32 B35 D35 B38 D38 B41 D41 B44 D44 B47 D47 B50 D50'
         }).then(function(response) {
           rgg2statsRaw = response.result;
           

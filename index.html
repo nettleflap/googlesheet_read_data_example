@@ -266,6 +266,7 @@
           setGamesDropped();
           setGamesRerolled();
           setGamesDollar();
+          setTotalTime();
           
           slideshowData();
           slideshowInterval = setInterval(slideshowData, 2000);
@@ -335,6 +336,12 @@
       function setGamesDollar(){
         var text = 'Games $$$: ' + rgg2statsRaw.valueRanges[0].values[3];
         addRemoveFromDataArray(document.getElementById('gamesdollar').checked, rgg2statsData, text);
+        rebuildFinalList();
+      }
+      
+      function setTotalTime(){
+        var text = 'Total time spent: ' + rgg2statsRaw.valueRanges[1].values[0];
+        addRemoveFromDataArray(document.getElementById('totaltime').checked, rgg2statsData, text);
         rebuildFinalList();
       }
       

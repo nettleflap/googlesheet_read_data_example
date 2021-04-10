@@ -179,6 +179,19 @@
                    'RGG2 Stats!D5:D52',
                    'WheelSpins Season2!A2:A209']
         }).then(function(response) {
+          rgg2statsRaw = response.result;
+          
+          setGamesCompleted();
+          setGamesDropped();
+          setGamesRerolled();
+          setGamesDollar();
+          setTotalTime();
+          setAverageTime();
+          setLongestGame();
+          setShortestGame();
+          setPlatformSpecifics();
+          setSpins();
+          
           rawRefreshInterval = setInterval(function() {
             rgg2statsRaw = response.result;
           
@@ -195,6 +208,7 @@
           }, 5000);
           
           slideshowData();
+          
           slideshowInterval = setInterval(slideshowData, 10000);
         }, function(response) {
           setText('Error: ' + response.result.error.message);

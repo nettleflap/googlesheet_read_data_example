@@ -59,11 +59,11 @@
       <label for="seconds">Seconds between slides:</label>
       <input type="text" id="seconds" name="seconds" onchange="changeSlideshowTime()" value="2">
       <br>
-      <label for="tcolor">Text color:</label>
-      <input type="color" id="tcolor" name="tcolor" onchange="changeTextColor()" value="#ffffff">
-      <br>
       <label for="tsize">Text size:</label>
       <input type="text" id="tsize" name="tsize" onchange="changeTextSize()" value="20">
+      <br>
+      <label for="tcolor">Text color:</label>
+      <input type="color" id="tcolor" name="tcolor" onchange="changeTextColor()" value="#ffffff">
       <br>
       <label for="bgcolor">Background color:</label>
       <input type="color" id="bgcolor" name="bgcolor" onchange="changeBackgroundColor()" value="#000000">
@@ -112,6 +112,12 @@
       function setText(text) {
         document.getElementById('content').innerHTML = text;
       }
+      
+      $("#tax_rate_name, #tax_rate_rate").keypress(function (event) {
+        if (event.keyCode == 13) {
+          event.preventDefault();
+        }
+      });
 
       var data = null;
       var slideshowInterval;

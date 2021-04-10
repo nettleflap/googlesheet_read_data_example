@@ -51,8 +51,12 @@
     <form>
       <label for="seconds">Seconds between slides:</label>
       <input type="text" id="seconds" name="seconds" onchange="changeSlideshowTime()" value="2">
+      <br>
       <label for="tcolor">Text color:</label>
-      <input type="color" id="tcolor" name="tcolor" onchange="changeTextColor('$this.value')" value="#ffffff">
+      <input type="color" id="tcolor" name="tcolor" onchange="changeTextColor()" value="#ffffff">
+      <br>
+      <label for="bgcolor">Text color:</label>
+      <input type="color" id="bgcolor" name="bgcolor" onchange="changeBackgroundColor()" value="#000000">
     </form>
 
     <script type="text/javascript">
@@ -126,6 +130,10 @@
       
       function changeTextColor(){
         document.getElementById('content').style.color = document.getElementById('tcolor').value;
+      }
+      
+      function changeBackgroundColor(){
+        document.getElementById('frame').style.color = document.getElementById('bgcolor').value;
       }
 
     </script>

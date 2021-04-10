@@ -283,7 +283,7 @@
       }
 
       function setPlatformSpecifics(){
-        var platforms = ['DOS','C64','NES','MSX','SMS','Amiga','TG16','GEN','GBC','GG','SNES','NEO GEO','PS1','N64','GBA','SUB'];
+        var platforms = ['DOS','C64','NES','MSX','SMS','Amiga','TG-16','Genesis','GBC','Game Gear','SNES','Neo Geo','PS1','N64','GBA','SUB'];
         for (var i = 0; i < 16; i++){
           var text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games were beaten. A(n) ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average. ' + rgg2statsRaw.valueRanges[9].values[0 + i*3] + ' spent on ' + platforms[i] + ' games in total.';
           addRemoveFromDataArray(document.getElementById('platformspecifics').checked, rgg2statsData, text);

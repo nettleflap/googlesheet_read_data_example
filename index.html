@@ -319,19 +319,19 @@
       }
       
       function setGamesCompleted(){
-        var text = 'Games beaten: ' + rgg2statsRaw.values[0];
+        var text = 'Games beaten: ' + rgg2statsRaw[0].values[0];
         addRemoveFromDataArray(document.getElementById('gamescompleted').checked, rgg2statsData, text);
         rebuildFinalList();
       }
       
       function setGamesDropped(){
-        var text = 'Games dropped: ' + rgg2statsRaw.values[1];
+        var text = 'Games dropped: ' + rgg2statsRaw[0].values[1];
         addRemoveFromDataArray(document.getElementById('gamesdropped').checked, rgg2statsData, text);
         rebuildFinalList();
       }
       
       function setGamesRerolled(){
-        var text = 'Games rerolled: ' + rgg2statsRaw.values[2];
+        var text = 'Games rerolled: ' + rgg2statsRaw[0].values[2];
         addRemoveFromDataArray(document.getElementById('gamesrerolled').checked, rgg2statsData, text);
         rebuildFinalList();
       }

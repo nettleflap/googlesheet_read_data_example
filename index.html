@@ -57,7 +57,7 @@
     <p>SETTINGS</p>
     <form>
       <label for="seconds">Seconds between slides:</label>
-      <input type="text" id="seconds" name="seconds" onchange="changeSlideshowTime()" value="2">
+      <input type="text" id="seconds" name="seconds" onchange="changeSlideshowTime()" value="10">
       <br>
       <label for="tsize">Text size:</label>
       <input type="text" id="tsize" name="tsize" onchange="changeTextSize()" value="20">
@@ -188,7 +188,7 @@
           setPlatformSpecifics();
           
           slideshowData();
-          slideshowInterval = setInterval(slideshowData, 2000);
+          slideshowInterval = setInterval(slideshowData, 10000);
         }, function(response) {
           setText('Error: ' + response.result.error.message);
         });

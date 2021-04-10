@@ -260,6 +260,11 @@
           range: 'RGG2 Stats!B1:B3'
         }).then(function(response) {
           rgg2statsRaw = response.result;
+          
+          setGamesCompleted();
+          setGamesDropped();
+          setGamesRerolled();
+          
           slideshowData();
           slideshowInterval = setInterval(slideshowData, 2000);
         }, function(response) {
@@ -309,26 +314,26 @@
       
       function setGamesCompleted(){
         var text = 'Games beaten: ' + rgg2statsRaw.values[0];
-        removeFromDataArray(document.getElementById('gamescompleted').checked, rgg2statsData, text);
+        addRemoveFromDataArray(document.getElementById('gamescompleted').checked, rgg2statsData, text);
         rebuildFinalList();
       }
       
       function setGamesDropped(){
         var text = 'Games dropped: ' + rgg2statsRaw.values[1];
-        removeFromDataArray(document.getElementById('gamesdropped').checked, rgg2statsData, text);
+        addRemoveFromDataArray(document.getElementById('gamesdropped').checked, rgg2statsData, text);
         rebuildFinalList();
       }
       
       function setGamesRerolled(){
         var text = 'Games rerolled: ' + rgg2statsRaw.values[2];
-        removeFromDataArray(document.getElementById('gamesrerolled').checked, rgg2statsData, text);
+        addRemoveFromDataArray(document.getElementById('gamesrerolled').checked, rgg2statsData, text);
         rebuildFinalList();
       }
       
-      function removeFromDataArray(check, array, text){
+      function addRemoveFromDataArray(check, array, text){
         if (check == true){
           array.push(text);
-        } else {
+        } else if (array.indexOf(text) != -1) {
           var indexToRemove = array.indexOf(text);
           array.splice(indexToRemove, 1);
         }

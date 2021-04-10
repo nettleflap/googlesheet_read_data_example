@@ -67,7 +67,8 @@
       function initClient() {
         gapi.client.init({
           key: API_KEY,
-          clientId: CLIENT_ID
+          clientId: CLIENT_ID,
+          fetch_basic_profile: false
         }).then(function () {
           fetchDataStartSlideshow();
         });

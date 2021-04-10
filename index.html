@@ -272,6 +272,7 @@
           setGamesRerolled();
           setGamesDollar();
           setTotalTime();
+          setAverageTime();
           
           slideshowData();
           slideshowInterval = setInterval(slideshowData, 2000);
@@ -347,6 +348,12 @@
       function setTotalTime(){
         var text = 'Total time spent: ' + rgg2statsRaw.valueRanges[1].values[0];
         addRemoveFromDataArray(document.getElementById('totaltime').checked, rgg2statsData, text);
+        rebuildFinalList();
+      }
+      
+      function setAverageTime(){
+        var text = 'Average time spent on a beaten game: ' + rgg2statsRaw.valueRanges[1].values[1];
+        addRemoveFromDataArray(document.getElementById('averagetime').checked, rgg2statsData, text);
         rebuildFinalList();
       }
       

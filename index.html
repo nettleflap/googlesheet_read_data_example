@@ -242,9 +242,9 @@
         document.getElementById('content').innerHTML = text;
       }
 
-      var rgg2statsData = null;
-      var subListData = null;
-      var customMessageData = null;
+      var rgg2statsData = [];
+      var subListData = [];
+      var customMessageData = [];
       
       var shuffle = true;
       
@@ -252,7 +252,7 @@
       var subListRaw = null;
       
       var slideshowInterval;
-      var finalListOfData = null;
+      var finalListOfData = [];
       
       function fetchDataStartSlideshow() {
         gapi.client.sheets.spreadsheets.values.get({

@@ -61,7 +61,9 @@
        */
       function initClient() {
         gapi.client.init({
+          clientId: CLIENT_ID,
           apiKey: API_KEY,
+          scope: SCOPES,
           discoveryDocs: DISCOVERY_DOCS
         }).then(function () {
           fetchDataStartSlideshow();

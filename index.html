@@ -255,7 +255,7 @@
       var finalListOfData = [];
       
       function fetchDataStartSlideshow() {
-        gapi.client.sheets.spreadsheets.values.batchGet({
+        gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
           valueRanges: [
           {

@@ -260,14 +260,6 @@
           range: 'RGG2 Stats!B1:B3'
         }).then(function(response) {
           rgg2statsRaw = response.result;
-        }, function(response) {
-          setText('Error: ' + response.result.error.message);
-        });
-        gapi.client.sheets.spreadsheets.values.get({
-          spreadsheetId: '1vTkpd5OxriydMk9L7z4PU07DAhuJ_VVHh1nx0yyfqT0',
-          range: 'Games!B:C'
-        }).then(function(response) {
-          subListRaw = response.result;
           slideshowData();
           slideshowInterval = setInterval(slideshowData, 2000);
         }, function(response) {

@@ -331,6 +331,12 @@
         rebuildFinalList();
       }
       
+      function setGamesDollar(){
+        var text = 'Games $$$: ' + rgg2statsRaw.valueRanges[0].values[3];
+        addRemoveFromDataArray(document.getElementById('gamesdollar').checked, rgg2statsData, text);
+        rebuildFinalList();
+      }
+      
       function addRemoveFromDataArray(check, array, text){
         if (check == true){
           array.push(text);

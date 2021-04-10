@@ -23,7 +23,7 @@
     
     #frame {
       background-color:black;
-      height: 40px;
+      height: 200px;
     }
     
     body {
@@ -47,7 +47,7 @@
     <br>
     <br>
     
-    <p>Settings:</p>
+    <p>SETTINGS</p>
     <form>
       <label for="seconds">Seconds between slides:</label>
       <input type="text" id="seconds" name="seconds" onchange="changeSlideshowTime()" value="2">
@@ -55,7 +55,7 @@
       <label for="tcolor">Text color:</label>
       <input type="color" id="tcolor" name="tcolor" onchange="changeTextColor()" value="#ffffff">
       <br>
-      <label for="bgcolor">Text color:</label>
+      <label for="bgcolor">Background color:</label>
       <input type="color" id="bgcolor" name="bgcolor" onchange="changeBackgroundColor()" value="#000000">
     </form>
 
@@ -133,7 +133,7 @@
       }
       
       function changeBackgroundColor(){
-        document.getElementById('frame').style.color = document.getElementById('bgcolor').value;
+        document.getElementById('frame').style.backgroundColor = document.getElementById('bgcolor').value;
       }
 
     </script>

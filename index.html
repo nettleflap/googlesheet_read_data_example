@@ -257,12 +257,10 @@
       function fetchDataStartSlideshow() {
         gapi.client.sheets.spreadsheets.values.batchGet({
           spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
-          ranges: [
-            range: 'RGG2 Stats!B1:B4'
-          ],
-          [
+          ranges: [{
+            range: 'RGG2 Stats!B1:B4',
             range: 'RGG2 Stats!D1:D3'
-          ]
+          }]
         }).then(function(response) {
           rgg2statsRaw = response.result;
           

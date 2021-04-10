@@ -22,7 +22,7 @@
     }
     
     #frame {
-      background-color:pink;
+      background-color:black;
       height: 40px;
     }
     
@@ -49,8 +49,10 @@
     
     <p>Settings:</p>
     <form>
-      <label for="fname">Seconds between slides:</label>
-      <input type="text" id="fname" name="fname" onchange="changeSlideshowTime()" value="2">
+      <label for="seconds">Seconds between slides:</label>
+      <input type="text" id="seconds" name="seconds" onchange="changeSlideshowTime()" value="2">
+      <label for="tcolor">Text color:</label>
+      <input type="color" id="tcolor" name="tcolor" onchange="changeTextColor($this.value)" value="#000000">
     </form>
 
     <script type="text/javascript">
@@ -119,7 +121,11 @@
       
       function changeSlideshowTime(){
         clearInterval(slideshowInterval);
-        slideshowInterval = setInterval(slideshowData, document.getElementById('fname').value * 1000);
+        slideshowInterval = setInterval(slideshowData, document.getElementById('seconds').value * 1000);
+      }
+      
+      function changeTextColor(string c){
+        document.getElementById('content').style.color = c;
       }
 
     </script>

@@ -192,21 +192,6 @@
           setPlatformSpecifics();
           setSpins();
           
-          rawRefreshInterval = setInterval(function() {
-            rgg2statsRaw = response.result;
-          
-            setGamesCompleted();
-            setGamesDropped();
-            setGamesRerolled();
-            setGamesDollar();
-            setTotalTime();
-            setAverageTime();
-            setLongestGame();
-            setShortestGame();
-            setPlatformSpecifics();
-            setSpins();
-          }, 5000);
-          
           slideshowData();
           
           slideshowInterval = setInterval(slideshowData, 10000);

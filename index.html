@@ -40,7 +40,7 @@
 
     <script type="text/javascript">
       // Client ID and API key from the Developer Console
-      var CLIENT_ID = '110449457142-2jhga0g4jp82srb276ldp8a6vulks4fk.apps.googleusercontent.com';
+      var CLIENT_ID = '110449457142-u01dfg0mhqn2eis7pm3q42ook22i9kkj.apps.googleusercontent.com';
       var API_KEY = 'AIzaSyAmg2WiuGV5muem_wRzV6h-8uX2gUVjVcA';
 
       // Array of API discovery doc URLs for APIs used by the quickstart
@@ -69,15 +69,7 @@
           key: API_KEY,
           clientId: CLIENT_ID
         }).then(function () {
-          // Listen for sign-in state changes.
-          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-          // Handle the initial sign-in state.
-          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-          authorizeButton.onclick = handleAuthClick;
-          signoutButton.onclick = handleSignoutClick;
-        }, function(error) {
-          setText(JSON.stringify(error, null, 2));
+          fetchDataStartSlideshow();
         });
       }
 

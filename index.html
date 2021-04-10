@@ -62,6 +62,9 @@
       <label for="tcolor">Text color:</label>
       <input type="color" id="tcolor" name="tcolor" onchange="changeTextColor()" value="#ffffff">
       <br>
+      <label for="tsize">Text size:</label>
+      <input type="text" id="tsize" name="tsize" onchange="changeTextSize()" value="20">
+      <br>
       <label for="bgcolor">Background color:</label>
       <input type="color" id="bgcolor" name="bgcolor" onchange="changeBackgroundColor()" value="#000000">
       <br>
@@ -142,6 +145,10 @@
       
       function changeTextColor(){
         document.getElementById('content').style.color = document.getElementById('tcolor').value;
+      }
+      
+      function changeTextSize(){
+        document.getElementById('content').style.fontSize = document.getElementById('tsize').value + 'px';
       }
       
       function changeBackgroundColor(){

@@ -256,6 +256,9 @@
       
       var shuffle = true;
       
+      var rgg2statsRaw = null;
+      var subListRaw = null;
+      
       var slideshowInterval;
       var finalListOfData = null;
       
@@ -264,7 +267,15 @@
           spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
           range: 'RGG2 Stats!B1:B2'
         }).then(function(response) {
-          data = response.result;
+          rgg2statsRaw = response.result;
+        }, function(response) {
+          setText('Error: ' + response.result.error.message);
+        });
+        gapi.client.sheets.spreadsheets.values.get({
+          spreadsheetId: '1vTkpd5OxriydMk9L7z4PU07DAhuJ_VVHh1nx0yyfqT0',
+          range: 'Games!B'
+        }).then(function(response) {
+          subListRaw = response.result;
           slideshowData();
           slideshowInterval = setInterval(slideshowData, 2000);
         }, function(response) {
@@ -277,7 +288,7 @@
                         'Games dropped: '];
       
       function slideshowData(){
-        setText(dataTitles[slideshowIndex] + data.values[slideshowIndex]);
+        setText(finalListOfData[slideshowIndex] + data.values[slideshowIndex]);
         slideshowIndex = (slideshowIndex+1) % data.values.length;
       }
       
@@ -315,7 +326,7 @@
       }
       
       function setGamesCompleted(){
-        dataTitles
+        rgg2statsData.push('Games beaten: ' + 
       }
       
       function setShuffle(){

@@ -75,6 +75,16 @@
       <input type="text" id="fheight" name="fheight" onchange="changeFrameHeight()" value="200">
     </form>
     
+    <p>CUSTOMIZE CONTENT (WORK IN PROGRESS)</p>
+    <form>
+      <label for="tcompleted">Total completed</label>
+      <input type="checkbox" id="tcompleted" name="tcompleted" onchange="setTotalCompleted()" value="true">
+      <br>
+      <label for="tdropped">Total dropped</label>
+      <input type="checkbox" id="tdropped" name="tdropped" onchange="setTotalDropped()" value="true">
+      <br>
+    </form>
+    
     <script>
       $("#tax_rate_name, #tax_rate_rate").keypress(function (event) {
         if (event.keyCode == 13) {

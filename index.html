@@ -74,7 +74,15 @@
       <label for="fheight">Height:</label>
       <input type="text" id="fheight" name="fheight" onchange="changeFrameHeight()" value="200">
     </form>
-
+    
+    <script>
+      $("#tax_rate_name, #tax_rate_rate").keypress(function (event) {
+        if (event.keyCode == 13) {
+          event.preventDefault();
+        }
+      });
+    </script>
+    
     <script type="text/javascript">
       // Client ID and API key from the Developer Console
       var CLIENT_ID = '110449457142-u01dfg0mhqn2eis7pm3q42ook22i9kkj.apps.googleusercontent.com';
@@ -112,12 +120,6 @@
       function setText(text) {
         document.getElementById('content').innerHTML = text;
       }
-      
-      $("#tax_rate_name, #tax_rate_rate").keypress(function (event) {
-        if (event.keyCode == 13) {
-          event.preventDefault();
-        }
-      });
 
       var data = null;
       var slideshowInterval;

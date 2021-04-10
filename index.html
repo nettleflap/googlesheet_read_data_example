@@ -269,6 +269,7 @@
           setGamesDollar();
           setTotalTime();
           setAverageTime();
+          setLongestGame();
           
           slideshowData();
           slideshowInterval = setInterval(slideshowData, 2000);
@@ -355,7 +356,7 @@
       
       function setLongestGame(){
         var text = 'Until now ' + rgg2statsRaw.valueRanges[2].values[0] + ' (' + rgg2statsRaw.valueRanges[2].values[3] + ') was the longest game to beat with a time of ' + rgg2statsRaw.valueRanges[2].values[1] + '!';
-        addRemoveFromDataArray(document.getElementById('averagetime').checked, rgg2statsData, text);
+        addRemoveFromDataArray(document.getElementById('longestgame').checked, rgg2statsData, text);
         rebuildFinalList();
       }
       

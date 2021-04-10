@@ -109,6 +109,9 @@
       <br>
       <label for="platformspecifics">Platform specifics</label>
       <input type="checkbox" id="platformspecifics" name="platformspecifics" onchange="setPlatformSpecifics()" checked>
+      <br>
+      <label for="spins">Spins</label>
+      <input type="checkbox" id="spins" name="spins" onchange="setSpins()" checked>
     </form>
     
     <script type="text/javascript">
@@ -173,19 +176,23 @@
                    'RGG2 Stats!D4',
                    'RGG2 Stats!F4',
                    'RGG2 Stats!B5:B52',
-                   'RGG2 Stats!D5:D52']
+                   'RGG2 Stats!D5:D52',
+                   'WheelSpins Season2!A2:A209']
         }).then(function(response) {
-          rgg2statsRaw = response.result;
+          rawRefreshInterval = setInterval(function() {
+            rgg2statsRaw = response.result;
           
-          setGamesCompleted();
-          setGamesDropped();
-          setGamesRerolled();
-          setGamesDollar();
-          setTotalTime();
-          setAverageTime();
-          setLongestGame();
-          setShortestGame();
-          setPlatformSpecifics();
+            setGamesCompleted();
+            setGamesDropped();
+            setGamesRerolled();
+            setGamesDollar();
+            setTotalTime();
+            setAverageTime();
+            setLongestGame();
+            setShortestGame();
+            setPlatformSpecifics();
+            setSpins();
+          }, 5000);
           
           slideshowData();
           slideshowInterval = setInterval(slideshowData, 10000);
@@ -289,6 +296,19 @@
           addRemoveFromDataArray(document.getElementById('platformspecifics').checked, rgg2statsData, text);
         }
         rebuildFinalList();
+      }
+      
+      function setSpins(){
+        for (var i = 0; i < rgg2statsRaw.valueRanges[10].values.length; i++){
+          if (rgg2statsRaw.valueRanges[10].values[i] != ''){
+            continue;
+          } else {
+            var text = 'Wheel was spun ' + i-1 + ' times! <i>Right round baby right round!</i>';
+            addRemoveFromDataArray(document.getElementById('spins').checked, rgg2statsData, text);
+            rebuildFinalList();
+            break;
+          }
+        }
       }
       
       function addRemoveFromDataArray(check, array, text){

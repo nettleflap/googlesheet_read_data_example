@@ -79,6 +79,10 @@
     
     <p>CUSTOMIZE CONTENT (WORK IN PROGRESS)</p>
     <form>
+      <label for="shuffle">Shuffle</label>
+      <input type="checkbox" id="shuffle" name="shuffle" onchange="setShuffle()" checked>
+      <br>
+      <br>
       <label for="gamescompleted">Games completed</label>
       <input type="checkbox" id="gamescompleted" name="gamescompleted" onchange="setGamesCompleted()" checked>
       <br>
@@ -246,8 +250,14 @@
         document.getElementById('content').innerHTML = text;
       }
 
-      var data = null;
+      var rgg2statsData = null;
+      var subListData = null;
+      var customMessageData = null;
+      
+      var shuffle = true;
+      
       var slideshowInterval;
+      var finalListOfData = null;
       
       function fetchDataStartSlideshow() {
         gapi.client.sheets.spreadsheets.values.get({
@@ -269,6 +279,14 @@
       function slideshowData(){
         setText(dataTitles[slideshowIndex] + data.values[slideshowIndex]);
         slideshowIndex = (slideshowIndex+1) % data.values.length;
+      }
+      
+      function rebuildFinalList(){
+        finalListOfData = [];
+        finalListOfData = rgg2statsData.concat(subListData, customMessageData);
+        if (shuffle) {
+          shuffleArray(finalListOfData);
+        }
       }
       
       function changeSlideshowTime(){
@@ -294,6 +312,33 @@
       
       function changeFrameHeight(){
         document.getElementById('frame').style.height = document.getElementById('fheight').value + 'px';
+      }
+      
+      function setGamesCompleted(){
+        dataTitles
+      }
+      
+      function setShuffle(){
+        if (document.getElementById('shuffle').checked == true){
+          shuffle = true;
+        } else {
+          shuffle = false;
+        }
+        rebuildFinalList();
+      }
+      
+      function shuffleArray(array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+
+        while (0 !== currentIndex) {
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
+        }
+        return array;
       }
 
     </script>

@@ -265,7 +265,7 @@
       function fetchDataStartSlideshow() {
         gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
-          range: 'RGG2 Stats!B1:B2'
+          range: 'RGG2 Stats!B1:B3'
         }).then(function(response) {
           rgg2statsRaw = response.result;
         }, function(response) {
@@ -284,12 +284,10 @@
       }
       
       var slideshowIndex = 0;
-      var dataTitles = ['Games beaten: ',
-                        'Games dropped: '];
       
       function slideshowData(){
-        setText(finalListOfData[slideshowIndex] + data.values[slideshowIndex]);
-        slideshowIndex = (slideshowIndex+1) % data.values.length;
+        setText(finalListOfData[slideshowIndex]);
+        slideshowIndex = (slideshowIndex+1) % finalListOfData.length;
       }
       
       function rebuildFinalList(){
@@ -326,7 +324,30 @@
       }
       
       function setGamesCompleted(){
-        rgg2statsData.push('Games beaten: ' + 
+        var text = 'Games beaten: ' + rgg2statsRaw.values[0];
+        removeFromDataArray(document.getElementById('gamescompleted').checked, rgg2statsData, text);
+        rebuildFinalList();
+      }
+      
+      function setGamesDropped(){
+        var text = 'Games dropped: ' + rgg2statsRaw.values[1];
+        removeFromDataArray(document.getElementById('gamesdropped').checked, rgg2statsData, text);
+        rebuildFinalList();
+      }
+      
+      function setGamesRerolled(){
+        var text = 'Games rerolled: ' + rgg2statsRaw.values[2];
+        removeFromDataArray(document.getElementById('gamesrerolled').checked, rgg2statsData, text);
+        rebuildFinalList();
+      }
+      
+      function removeFromDataArray(bool check, var array, var text){
+        if (check == true){
+          array.push(text);
+        } else {
+          var indexToRemove = array.indexOf(text);
+          array.splice(indexToRemove, 1);
+        }
       }
       
       function setShuffle(){

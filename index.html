@@ -34,7 +34,7 @@
       clip-path: inset(30px);
     }
     
-    .content.appear {
+    .appear {
       -webkit-transition: 2s;
       -moz-transition: 2s;
       -ms-transition: 2s;
@@ -43,7 +43,7 @@
       top: 50% !important;
     }
     
-    .content.hide {
+    .hide {
       -webkit-transition: 2s;
       -moz-transition: 2s;
       -ms-transition: 2s;
@@ -238,10 +238,13 @@
       }
       
       var slideshowIndex = 0;
+      var content = document.getElementById('content');
       
       function slideshowData(){
         setText(finalListOfData[slideshowIndex]);
         slideshowIndex = (slideshowIndex+1) % finalListOfData.length;
+        content.classList.add('appear');
+        setTimeout(function(){ content.classList.add('hide'); }, 6000);
       }
       
       function rebuildFinalList(){

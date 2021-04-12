@@ -244,7 +244,13 @@
         setText(finalListOfData[slideshowIndex]);
         slideshowIndex = (slideshowIndex+1) % finalListOfData.length;
         content.classList.add('appear');
-        setTimeout(function(){ content.classList.add('hide'); }, 6000);
+        setTimeout(function(){
+          content.classList.remove('appear');
+          content.classList.add('hide');
+          setTimeout(function(){
+            content.classList.remove('hide');
+          }, 2000);
+        }, 6000);
       }
       
       function rebuildFinalList(){

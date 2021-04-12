@@ -279,8 +279,9 @@
       }
       
       function changeBackgroundColor(){
-        document.getElementById('frame').style.backgroundColor = document.getElementById('bgcolor').value;
-        document.getElementById('hider').fill = document.getElementById('bgcolor').value;
+        var bgColor = document.getElementById('bgcolor').value;
+        document.getElementById('frame').style.backgroundColor = bgColor;
+        document.getElementById('hider').setAttribute("fill", bgColor);
       }
       
       function changeFrameWidth(){

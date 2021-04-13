@@ -70,6 +70,24 @@
       margin: auto;
     }
     
+	  .framehide {
+		  -webkit-transition: 2s;
+      -moz-transition: 2s;
+      -ms-transition: 2s;
+      -o-transition: 2s;
+      transition: 2s;
+      background-color: #00FF00 !important;
+	  }
+		
+		.frameappear {
+		  -webkit-transition: 2s;
+      -moz-transition: 2s;
+      -ms-transition: 2s;
+      -o-transition: 2s;
+      transition: 2s;
+      background-color: #FFFFFF !important;
+	  }
+    
     body {
       background-color: black;
       margin: auto;
@@ -243,16 +261,21 @@
       
       var slideshowIndex = 0;
       var content = document.getElementById('content');
+			var frame = document.getElementById('frame');
       
       function slideshowData(){
         setText(finalListOfData[slideshowIndex]);
         slideshowIndex = (slideshowIndex+1) % finalListOfData.length;
         content.classList.add('appear');
+				frame.classList.add('frameappear');
         setTimeout(function(){
           content.classList.remove('appear');
+					frame.classList.remove('frameappear');
           content.classList.add('hide');
+					frame.classList.add('framehide');
           setTimeout(function(){
             content.classList.remove('hide');
+						frame.classList.remove('framehide');
           }, 2000);
         }, 6000);
       }

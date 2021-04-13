@@ -267,14 +267,14 @@
         setText(finalListOfData[slideshowIndex]);
         slideshowIndex = (slideshowIndex+1) % finalListOfData.length;
         content.classList.add('appear');
-				frame.classList.add('frameappear');
+				setTimeout(function(){ frame.classList.add('frameappear'); }, 100);
         setTimeout(function(){
           content.classList.remove('appear');
-					frame.classList.remove('frameappear');
+				  setTimeout(function(){ frame.classList.remove('frameappear'); }, 100);
           content.classList.add('hide');
-					frame.classList.add('framehide');
+				  setTimeout(function(){ frame.classList.add('framehide'); }, 100);
           setTimeout(function(){
-            content.classList.remove('hide');
+            setTimeout(function(){ content.classList.remove('hide'); }, 100);
 						frame.classList.remove('framehide');
           }, 2000);
         }, 6000);

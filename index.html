@@ -266,18 +266,18 @@
       function slideshowData(){
         setText(finalListOfData[slideshowIndex]);
         slideshowIndex = (slideshowIndex+1) % finalListOfData.length;
-        setTimeout(function(){ content.classList.add('appear'); }, 100);
+        setTimeout(function(){ content.classList.add('appear'); }, 500);
 				frame.classList.add('frameappear');
         setTimeout(function(){
-          setTimeout(function(){ content.classList.remove('appear'); }, 100);
+          content.classList.remove('appear');
 				  frame.classList.remove('frameappear');
-          setTimeout(function(){ content.classList.add('hide'); }, 100);
-				  frame.classList.add('framehide');
+          content.classList.add('hide');
+				  setTimeout(function(){ frame.classList.add('framehide'); }, 500);
           setTimeout(function(){
             content.classList.remove('hide');
 						setTimeout(function(){ frame.classList.remove('framehide'); }, 100);
           }, 2000);
-        }, 6000);
+        }, 10000);
       }
       
       function rebuildFinalList(){

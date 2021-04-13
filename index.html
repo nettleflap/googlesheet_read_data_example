@@ -203,6 +203,7 @@
           scope: SCOPES,
           discoveryDocs: DISCOVERY_DOCS
         }).then(function () {
+          fetchDataStartSlideshow();
           setInterval(fetchDataStartSlideshow, 5000);
         });
       }
@@ -294,10 +295,8 @@
         
         // Build arrays
         var text = '';
-        if (rgg2statsRaw.valueRanges[0].values[0] != '0'){
-          var text = rgg2statsRaw.valueRanges[0].values[0] + ' games were beaten in total.';
-          rgg2statsData.push(text);
-        }
+        text = rgg2statsRaw.valueRanges[0].values[0] + ' games were beaten in total.';
+        rgg2statsData.push(text);
         if (rgg2statsRaw.valueRanges[0].values[1] != '0'){
           text = rgg2statsRaw.valueRanges[0].values[1] + ' games were dropped in total.';
           rgg2statsData.push(text);

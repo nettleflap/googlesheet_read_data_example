@@ -290,18 +290,19 @@
         
         // Build arrays
         var text = '';
-        text = rgg2statsRaw.valueRanges[0].values[0] + ' games were beaten in total.';
-        rgg2statsData.push(text);
-        console.log(rgg2statsRaw.valueRanges[0].values[1][0]);
-        if (rgg2statsRaw.valueRanges[0].values[1] != '0'){
+        if (rgg2statsRaw.valueRanges[0].values[0][0] != '0'){
+          text = rgg2statsRaw.valueRanges[0].values[0][0] + ' games were beaten in total.';
+          rgg2statsData.push(text);
+        }
+        if (rgg2statsRaw.valueRanges[0].values[1][0] != '0'){
           text = rgg2statsRaw.valueRanges[0].values[1] + ' games were dropped in total.';
           rgg2statsData.push(text);
         }
-        if (rgg2statsRaw.valueRanges[0].values[2] != '0'){
+        if (rgg2statsRaw.valueRanges[0].values[2][0] != '0'){
           text = rgg2statsRaw.valueRanges[0].values[2] + ' games were rerolled in total.';
           rgg2statsData.push(text);
         }
-        if (rgg2statsRaw.valueRanges[0].values[3] != '0'){
+        if (rgg2statsRaw.valueRanges[0].values[3][0] != '0'){
           text = rgg2statsRaw.valueRanges[0].values[3] + ' games were skipped with $uper $ellout $upport in total.';
           rgg2statsData.push(text);
         }

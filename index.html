@@ -292,7 +292,7 @@
         var text = '';
         text = rgg2statsRaw.valueRanges[0].values[0] + ' games were beaten in total.';
         rgg2statsData.push(text);
-        console.log(rgg2statsRaw.valueRanges[0].values[1]);
+        console.log(rgg2statsRaw.valueRanges[0].values[1][0]);
         if (rgg2statsRaw.valueRanges[0].values[1] != '0'){
           text = rgg2statsRaw.valueRanges[0].values[1] + ' games were dropped in total.';
           rgg2statsData.push(text);

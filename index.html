@@ -272,9 +272,8 @@
           content.classList.remove('appear');
 				  frame.classList.remove('frameappear');
           content.classList.add('hide');
-				  setTimeout(function(){ frame.classList.add('framehide'); }, 1000);
+				  setTimeout(function(){ frame.classList.add('framehide'); setTimeout(function(){ frame.classList.remove('framehide'); }, 2000); }, 1000);
           setTimeout(function(){ content.classList.remove('hide'); }, 2000);
-          setTimeout(function(){ frame.classList.remove('framehide'); }, 3000);
         }, 10000);
       }
       

@@ -272,18 +272,6 @@
         setTimeout(function(){ content.classList.add('appear'); }, 1000);
         setTimeout(function(){ content.classList.remove('appear'); content.classList.add('hide'); }, 9000);
         setTimeout(function(){ content.classList.remove('hide'); }, 11000);
-        /*setTimeout(function(){ content.classList.add('appear'); }, 1000);
-				frame.classList.add('frameappear');
-        setTimeout(function(){
-          content.classList.remove('appear');
-          content.classList.add('hide');
-				  setTimeout(function(){
-            frame.classList.remove('frameappear');
-            frame.classList.add('framehide');
-            setTimeout(function(){ frame.classList.remove('framehide');
-          }, 2000); }, 1000);
-          setTimeout(function(){ content.classList.remove('hide'); }, 2000);
-        }, 10000);*/
       }
       
       function rebuildFinalList(){
@@ -304,6 +292,7 @@
         var text = '';
         text = rgg2statsRaw.valueRanges[0].values[0] + ' games were beaten in total.';
         rgg2statsData.push(text);
+        console.log(rgg2statsRaw.valueRanges[0].values[1]);
         if (rgg2statsRaw.valueRanges[0].values[1] != '0'){
           text = rgg2statsRaw.valueRanges[0].values[1] + ' games were dropped in total.';
           rgg2statsData.push(text);

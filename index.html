@@ -203,7 +203,7 @@
           scope: SCOPES,
           discoveryDocs: DISCOVERY_DOCS
         }).then(function () {
-          fetchDataStartSlideshow();
+          setInterval(fetchDataStartSlideshow, 5000);
         });
       }
       
@@ -215,13 +215,15 @@
       var subListData = [];
       var customMessageData = [];
       
-      var shuffle = true;
+      //var shuffle = true;
       
       var rgg2statsRaw = null;
       var subListRaw = null;
       
       var slideshowInterval;
       var finalListOfData = [];
+      
+      var slideshowStarted = false;
       
       function fetchDataStartSlideshow() {
         gapi.client.sheets.spreadsheets.values.batchGet({
@@ -238,22 +240,18 @@
                    'RGG2 Stats!D5:D52',
                    'WheelSpins Season2!A2:A209']
         }).then(function(response) {
+          // Fetch raw data
           rgg2statsRaw = response.result;
           
-          setGamesCompleted();
-          setGamesDropped();
-          setGamesRerolled();
-          setGamesDollar();
-          setTotalTime();
-          setAverageTime();
-          setLongestGame();
-          setShortestGame();
-          setPlatformSpecifics();
-          setSpins();
+          // Update the data that will be shown
+          updateDataList();
           
-          slideshowData();
-          
-          slideshowInterval = setInterval(slideshowData, 13000);
+          // Start slideshow, only once
+          if (slideshowStarted == false){
+            slideshowStarted = true;
+            slideshowData();
+            slideshowInterval = setInterval(slideshowData, 13000);
+          }
         }, function(response) {
           setText('Error: ' + response.result.error.message);
         });
@@ -283,12 +281,43 @@
       function rebuildFinalList(){
         finalListOfData = [];
         finalListOfData = rgg2statsData.concat(subListData, customMessageData);
-        if (shuffle) {
+        //if (shuffle) {
           shuffleArray(finalListOfData);
-        }
+        //}
       }
       
-      function changeSlideshowTime(){
+      function updateDataList(){
+        // Empty arrays
+        rgg2statsData = [];
+        subListData = [];
+        customMessageData = [];
+        
+        // Build arrays
+        var text = '';
+        if (rgg2statsRaw.valueRanges[0].values[0] != '0'){
+          var text = rgg2statsRaw.valueRanges[0].values[0] + ' games were beaten in total.';
+          rgg2statsData.push(text);
+        }
+        if (rgg2statsRaw.valueRanges[0].values[1] != '0'){
+          text = rgg2statsRaw.valueRanges[0].values[1] + ' games were dropped in total.';
+          rgg2statsData.push(text);
+        }
+        if (rgg2statsRaw.valueRanges[0].values[2] != '0'){
+          text = rgg2statsRaw.valueRanges[0].values[2] + ' games were rerolled in total.';
+          rgg2statsData.push(text);
+        }
+        if (rgg2statsRaw.valueRanges[0].values[3] != '0'){
+          text = rgg2statsRaw.valueRanges[0].values[3] + ' games were skipped with $uper $ellout $upport in total.';
+          rgg2statsData.push(text);
+        }
+        text = rgg2statsRaw.valueRanges[1].values[0] + ' total time was spent.';
+        rgg2statsData.push(text);
+        
+        // Gather them all and shuffle
+        rebuildFinalList();
+      }
+      
+      /*function changeSlideshowTime(){
         clearInterval(slideshowInterval);
         slideshowInterval = setInterval(slideshowData, document.getElementById('seconds').value * 1000);
       }
@@ -313,12 +342,12 @@
       
       function changeFrameHeight(){
         document.getElementById('frame').style.height = document.getElementById('fheight').value + 'px';
-      }
+      }*/
       
       function setGamesCompleted(){
         var text = 'Games beaten: ' + rgg2statsRaw.valueRanges[0].values[0];
         //addRemoveFromDataArray(document.getElementById('gamescompleted').checked, rgg2statsData, text);
-	addRemoveFromDataArray(true, rgg2statsData, text);
+        addRemoveFromDataArray(true, rgg2statsData, text);
         rebuildFinalList();
       }
       

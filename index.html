@@ -251,7 +251,7 @@
           if (slideshowStarted == false){
             slideshowStarted = true;
             slideshowData();
-            slideshowInterval = setInterval(slideshowData, 13000);
+            slideshowInterval = setInterval(slideshowData, 30000);
           }
         }, function(response) {
           setText('Error: ' + response.result.error.message);

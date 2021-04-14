@@ -341,11 +341,11 @@
           text = 'Average time spent on a beaten game: ' + rgg2statsRaw.valueRanges[1].values[1][0];
           rgg2statsData.push(text);
         }
-        if (rgg2statsRaw.valueRanges[2].values[0][] != ''){
+        if (rgg2statsRaw.valueRanges[2].values[0][0] != ''){
           text = rgg2statsRaw.valueRanges[2].values[0] + ' (' + rgg2statsRaw.valueRanges[4].values[0] + ') was the longest game to beat with a time of ' + rgg2statsRaw.valueRanges[3].values[0] + '!';
           rgg2statsData.push(text);
         }
-        if (rgg2statsRaw.valueRanges[5].values[0] != ''){
+        if (rgg2statsRaw.valueRanges[5].values[0][0] != ''){
           text = rgg2statsRaw.valueRanges[5].values[0] + ' (' + rgg2statsRaw.valueRanges[7].values[0] + ') was the shortest game to beat with a time of ' + rgg2statsRaw.valueRanges[6].values[0] + '!';
           rgg2statsData.push(text);
         }

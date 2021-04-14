@@ -294,7 +294,7 @@
       }
       
       function fillIndexArray(array){
-        for (var i=0; i<15; i++){
+        for (var i=0; i<20; i++){
           array.push(i);
         }
       }
@@ -361,7 +361,26 @@
             rgg2statsData.push(text);
           }
         }
-        console.log(rgg2statsRaw.valueRanges[10].values[0]);
+        if (rgg2statsRaw.valueRanges[10].values.length != 0){
+          var numberOfSpins = rgg2statsRaw.valueRanges[10].values.length;
+          var spinTypes = [];
+          for (var i=0; i<rgg2statsRaw.valueRanges[10].values.length; i++){
+            var entry = rgg2statsRaw.valueRanges[10].values[i][0];
+            if (entry == 'Used Hint' || entry == 'Used Potion'){
+              numberOfSpins--;
+              spinTypes.push(entry);
+            }
+          }
+          
+          if (numberOfSpins > 0){
+            text = 'Wheel was spun ' + rgg2statsRaw.valueRanges[10].values.length + ' times!';
+            rgg2statsData.push(text);
+            var mostOccured = mode(array);
+            text = 'Most occured wheel prize/punishment was ' + mostOccured;
+            rgg2statsData.push(text);
+          }
+        }
+        console.log(rgg2statsRaw.valueRanges[10].values[0][0]);
         /*if (rgg2statsRaw.valueRanges[10].values.length != 0){
           text = 'Wheel was spun ' + rgg2statsRaw.valueRanges[10].values.length + ' times!';
           rgg2statsData.push(text);
@@ -385,6 +404,27 @@
         
         // Gather them all and shuffle
         rebuildFinalList();
+      }
+      
+      function mode(array){
+          if(array.length == 0)
+              return null;
+          var modeMap = {};
+          var maxEl = array[0], maxCount = 1;
+          for(var i = 0; i < array.length; i++)
+          {
+              var el = array[i];
+              if(modeMap[el] == null)
+                  modeMap[el] = 1;
+              else
+                  modeMap[el]++;  
+              if(modeMap[el] > maxCount)
+              {
+                  maxEl = el;
+                  maxCount = modeMap[el];
+              }
+          }
+          return maxEl;
       }
       
       /*function changeSlideshowTime(){

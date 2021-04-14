@@ -284,14 +284,14 @@
         setTimeout(function(){ content.classList.remove('hide'); }, 11000);
       }
       
-      function pickRandomIndexAndRemove(var array){
+      function pickRandomIndexAndRemove(array){
         var randomIndex = getRndInteger(0, array.length-1);
         var chosen = array[randomIndex];
         array.splice(randomIndex, 1);
         return chosen;
       }
       
-      function fillIndexArray(var array){
+      function fillIndexArray(array){
         for (var i=0; i<15; i++){
           array.push(i);
         }

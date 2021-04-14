@@ -265,11 +265,11 @@
       
       function slideshowData(){
         // if no numbers left to pick, refill numbers
-        console.log(indexArray);
-        console.log(indexArray.length);
         if (indexArray.length <= 0){
           fillIndexArray(indexArray);
         }
+        console.log(indexArray);
+        console.log(indexArray.length);
         // random number, cap it at last index, set text
         var randomIndex = pickRandomIndexAndRemove(indexArray);
         randomIndex = Math.min(randomIndex, finalListOfData.length-1);

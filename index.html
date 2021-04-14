@@ -257,11 +257,21 @@
         });
       }
       
+      var indexArray = [];
       var slideshowIndex = 0;
       var content = document.getElementById('content');
 			var frame = document.getElementById('frame');
       
       function slideshowData(){
+        // if no numbers left to pick, refill numbers
+        if (indexArray.length <= 0){
+          fillIndexArray(indexArray);
+        }
+        // random number, cap it at last index, set text
+        var randomIndex = pickRandomIndexAndRemove(indexArray);
+        randomIndex = Math.min(randomIndex, finalListOfData.length-1);
+        setText(finalListOfData[randomIndex]);
+        
         setText(finalListOfData[slideshowIndex]);
         slideshowIndex = (slideshowIndex+1) % finalListOfData.length;
         
@@ -272,6 +282,23 @@
         setTimeout(function(){ content.classList.add('appear'); }, 1000);
         setTimeout(function(){ content.classList.remove('appear'); content.classList.add('hide'); }, 9000);
         setTimeout(function(){ content.classList.remove('hide'); }, 11000);
+      }
+      
+      function pickRandomIndexAndRemove(var array){
+        var randomIndex = getRndInteger(0, array.length-1);
+        var chosen = array[randomIndex];
+        array.splice(randomIndex, 1);
+        return chosen;
+      }
+      
+      function fillIndexArray(var array){
+        for (var i=0; i<15; i++){
+          array.push(i);
+        }
+      }
+      
+      function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) ) + min;
       }
       
       function rebuildFinalList(){

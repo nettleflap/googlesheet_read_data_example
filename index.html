@@ -258,7 +258,7 @@
       }
       
       var indexArray = [];
-      var slideshowIndex = 0;
+      //var slideshowIndex = 0;
       var content = document.getElementById('content');
 			var frame = document.getElementById('frame');
       
@@ -272,8 +272,8 @@
         randomIndex = Math.min(randomIndex, finalListOfData.length-1);
         setText(finalListOfData[randomIndex]);
         
-        setText(finalListOfData[slideshowIndex]);
-        slideshowIndex = (slideshowIndex+1) % finalListOfData.length;
+        //setText(finalListOfData[slideshowIndex]);
+        //slideshowIndex = (slideshowIndex+1) % finalListOfData.length;
         
         frame.classList.add('frameappear');
         setTimeout(function(){ frame.classList.remove('frameappear'); frame.classList.add('framehide'); }, 10000);

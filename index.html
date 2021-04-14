@@ -250,7 +250,7 @@
           // Start slideshow, only once
           if (slideshowStarted == false){
             slideshowStarted = true;
-            slideshowInterval = setInterval(slideshowData, 30000);
+            slideshowInterval = setInterval(slideshowData, 60000);
           }
         }, function(response) {
           setText('Error: ' + response.result.error.message);
@@ -355,7 +355,7 @@
           if (rgg2statsRaw.valueRanges[8].values[0 + i*3][0] != '0'){
             text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games were beaten in total.';
             rgg2statsData.push(text);
-            text = 'A(n) ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average.';
+            text = 'A ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average.';
             rgg2statsData.push(text);
             text = rgg2statsRaw.valueRanges[9].values[0 + i*3] + ' spent on ' + platforms[i] + ' games in total.';
             rgg2statsData.push(text);
@@ -367,11 +367,19 @@
         }
         text = 'RGG TL:DR = TMR must beat 1 randomly picked game per system BUT subs & donations add extra games.';
         rgg2statsData.push(text);
-        text = 'Type <b>!rgglist</b> in the chat to access list of games and RGG rules!';
-        rgg2statsData.push(text);
-        text = 'You can add a game to the SUB game list by typing <b>!addgame Title (Platform)</b> in the chat!';
+        text = 'You can submit a game to the SUB game list by typing <b>!addgame Title (Platform)</b> in the chat!';
         rgg2statsData.push(text);
         text = 'Except certain wheel results, games for RGG are chosen randomly.';
+        rgg2statsData.push(text);
+        text = 'If TMR gives up on a game, he has to either beat 2 games instead or go back to the previous platform.';
+        rgg2statsData.push(text);
+        text = 'A new game is added every time a SUB or DONATION incentive is met. This also triggers the wheel.';
+        rgg2statsData.push(text);
+        text = '$uper $ellout $upport: Collectively donate $100 to skip current game. Just add $$$ to your donation message.';
+        rgg2statsData.push(text);
+        text = 'Every sub can submit 1 game per month. Only official games from RGG platforms are allowed!';
+        rgg2statsData.push(text);
+        text = 'Type <b>!rgglist</b> in the chat to access list of games and RGG rules!';
         rgg2statsData.push(text);
         
         // Gather them all and shuffle

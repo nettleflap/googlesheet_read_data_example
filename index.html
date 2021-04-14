@@ -250,7 +250,7 @@
           // Start slideshow, only once
           if (slideshowStarted == false){
             slideshowStarted = true;
-            slideshowInterval = setInterval(slideshowData, 60000);
+            slideshowInterval = setInterval(slideshowData, 20000);
           }
         }, function(response) {
           setText('Error: ' + response.result.error.message);

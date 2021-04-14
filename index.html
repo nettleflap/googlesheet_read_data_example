@@ -261,6 +261,7 @@
       //var slideshowIndex = 0;
       var content = document.getElementById('content');
 			var frame = document.getElementById('frame');
+      var platforms = ['DOS','C64','NES','MSX','SMS','Amiga','TG-16','Genesis','GBC','Game Gear','SNES','Neo Geo','PS1','N64','GBA','SUB'];
       
       function slideshowData(){
         // if no numbers left to pick, refill numbers
@@ -351,6 +352,20 @@
           text = rgg2statsRaw.valueRanges[5].values[0] + ' (' + rgg2statsRaw.valueRanges[7].values[0] + ') was the shortest game to beat with a time of ' + rgg2statsRaw.valueRanges[6].values[0] + '!';
           rgg2statsData.push(text);
         }
+        for (var i = 0; i < 16; i++){
+          if (rgg2statsRaw.valueRanges[8].values[0 + i*3][0] != '0'){
+            text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games were beaten. A(n) ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average. ' + rgg2statsRaw.valueRanges[9].values[0 + i*3] + ' spent on ' + platforms[i] + ' games in total.';
+            rgg2statsData.push(text);
+          }
+        }
+        if (rgg2statsRaw.valueRanges[10].values.length != 0){
+          text = 'Wheel was spun ' + rgg2statsRaw.valueRanges[10].values.length + ' times! <i>Right round baby right round!</i>';
+          rgg2statsData.push(text);
+        }
+        text = 'RGG TL:DR = TMR must beat 1 randomly picked game per system BUT subs & donations add extra games.';
+        rgg2statsData.push(text);
+        text = 'You can see a list of the games from season 1 & 2 of RGG by typing <b>!rgglist</b> in the chat!';
+        rgg2statsData.push(text);
         
         // Gather them all and shuffle
         rebuildFinalList();
@@ -458,10 +473,8 @@
       
       // the person who spun the wheel most times
       // wheel spin result most/least
-      // ________ ignore if stat is 0
       // inventory stats
       // you can add game by...
-      // TMR must beat 1 randomly picked game per system BUT subs & donations add extra games.
       // you can see the rules of RGG challenge by...
 	
       

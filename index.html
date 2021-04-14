@@ -64,9 +64,7 @@
     }
     
     .frame {
-      /*background-color: #00FF00;*/
-      opacity: 0;
-      background-color: #000000;
+      background-color: #00FF00;
       height: 200px;
       width: 2000px;
       margin: auto;
@@ -78,8 +76,7 @@
       -ms-transition: 2s;
       -o-transition: 2s;
       transition: 2s;
-      /*background-color: #00FF00 !important;*/
-      opacity: 0 !important;
+      background-color: #00FF00 !important;
 	  }
 		
 		.frameappear {
@@ -88,8 +85,7 @@
       -ms-transition: 2s;
       -o-transition: 2s;
       transition: 2s;
-      /*background-color: #000000 !important;*/
-      opacity: 1 !important;
+      background-color: #000000 !important;
 	  }
     
     body {
@@ -357,7 +353,11 @@
         }
         for (var i = 0; i < 16; i++){
           if (rgg2statsRaw.valueRanges[8].values[0 + i*3][0] != '0'){
-            text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games were beaten. A(n) ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average. ' + rgg2statsRaw.valueRanges[9].values[0 + i*3] + ' spent on ' + platforms[i] + ' games in total.';
+            text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games were beaten.';
+            rgg2statsData.push(text);
+            text = 'A(n) ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average.';
+            rgg2statsData.push(text);
+            text = rgg2statsRaw.valueRanges[9].values[0 + i*3] + ' spent on ' + platforms[i] + ' games in total.';
             rgg2statsData.push(text);
           }
         }
@@ -367,9 +367,11 @@
         }
         text = 'RGG TL:DR = TMR must beat 1 randomly picked game per system BUT subs & donations add extra games.';
         rgg2statsData.push(text);
-        text = 'You can see a list of the games from season 1 & 2 of RGG by typing <b>!rgglist</b> in the chat!';
+        text = 'Type <b>!rgglist</b> in the chat to access list of games and RGG rules!';
         rgg2statsData.push(text);
         text = 'You can add a game to the SUB game list by typing <b>!addgame Title (Platform)</b> in the chat!';
+        rgg2statsData.push(text);
+        text = 'Except certain wheel results, games for RGG are chosen randomly.';
         rgg2statsData.push(text);
         
         // Gather them all and shuffle

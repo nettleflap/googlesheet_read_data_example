@@ -64,7 +64,8 @@
     }
     
     .frame {
-      background-color: #00FF00;
+      background-color: rgba(0,0,0,0);
+      /*background-color: #00FF00;*/
       height: 200px;
       width: 2000px;
       margin: auto;
@@ -76,7 +77,8 @@
       -ms-transition: 2s;
       -o-transition: 2s;
       transition: 2s;
-      background-color: #00FF00 !important;
+      background-color: rgba(0,0,0,0);
+      /*background-color: #00FF00 !important;*/
 	  }
 		
 		.frameappear {
@@ -85,7 +87,8 @@
       -ms-transition: 2s;
       -o-transition: 2s;
       transition: 2s;
-      background-color: #000000 !important;
+      background-color: rgba(0,0,0,1);
+      /*background-color: #000000 !important;*/
 	  }
     
     body {
@@ -362,7 +365,7 @@
           }
         }
         if (rgg2statsRaw.valueRanges[10].values.length != 0){
-          text = 'Wheel was spun ' + rgg2statsRaw.valueRanges[10].values.length + ' times! <i>Right round baby right round!</i>';
+          text = 'Wheel was spun ' + rgg2statsRaw.valueRanges[10].values.length + ' times!';
           rgg2statsData.push(text);
         }
         text = 'RGG TL:DR = TMR must beat 1 randomly picked game per system BUT subs & donations add extra games.';

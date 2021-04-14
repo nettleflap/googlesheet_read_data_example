@@ -239,7 +239,7 @@
                    'RGG2 Stats!F4',
                    'RGG2 Stats!B5:B52',
                    'RGG2 Stats!D5:D52',
-                   'WheelSpins Season2!A2:A209']
+                   'WheelSpins Season2!C2:C209']
         }).then(function(response) {
           // Fetch raw data
           rgg2statsRaw = response.result;
@@ -361,10 +361,11 @@
             rgg2statsData.push(text);
           }
         }
-        if (rgg2statsRaw.valueRanges[10].values.length != 0){
+        console.log(rgg2statsRaw.valueRanges[10]);
+        /*if (rgg2statsRaw.valueRanges[10].values.length != 0){
           text = 'Wheel was spun ' + rgg2statsRaw.valueRanges[10].values.length + ' times!';
           rgg2statsData.push(text);
-        }
+        }*/
         text = 'RGG TL:DR = TMR must beat 1 randomly picked game per system BUT subs & donations add extra games.';
         rgg2statsData.push(text);
         text = 'You can submit a game to the SUB game list by typing <b>!addgame Title (Platform)</b> in the chat!';

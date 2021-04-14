@@ -239,7 +239,8 @@
                    'RGG2 Stats!F4',
                    'RGG2 Stats!B5:B52',
                    'RGG2 Stats!D5:D52',
-                   'WheelSpins Season2!C2:C209']
+                   'WheelSpins Season2!C2:C209',
+                   'WheelSpins Season2!E2:E209']
         }).then(function(response) {
           // Fetch raw data
           rgg2statsRaw = response.result;
@@ -305,7 +306,7 @@
       
       function rebuildFinalList(){
         finalListOfData = [];
-        finalListOfData = rgg2statsData.concat(subListData, customMessageData);
+        finalListOfData = rgg2statsData;
         //if (shuffle) {
           //shuffleArray(finalListOfData);
         //}
@@ -314,8 +315,6 @@
       function updateDataList(){
         // Empty arrays
         rgg2statsData = [];
-        subListData = [];
-        customMessageData = [];
         
         // Build arrays
         var text = '';
@@ -381,6 +380,11 @@
             rgg2statsData.push(text);
           }
         }
+        var inventoryLast = rgg2statsRaw.valueRanges[11].values[rgg2statsRaw.valueRanges[11].values.length - 1][0];
+        var numberOfHints = inventoryLast.split(' ')[1].slice(0, -1);
+        var numberOfPotions = inventoryLast.split(' ')[3];
+        text = 'TMR currently has ' + numberOfHints + ' hints and ' + numberOfPotions + ' reroll potions in his inventory.';
+        rgg2statsData.push(text);
         text = 'RGG TL:DR = TMR must beat 1 randomly picked game per system BUT subs & donations add extra games.';
         rgg2statsData.push(text);
         text = 'You can submit a game to the SUB game list by typing <b>!addgame Title (Platform)</b> in the chat!';
@@ -524,10 +528,8 @@
       }
       
       // the person who spun the wheel most times
-      // wheel spin result most/least
+      // wheel spin result least
       // inventory stats
-      // you can see the rules of RGG challenge by...
-	
       
       function addRemoveFromDataArray(check, array, text){
         if (check == true){

@@ -323,7 +323,7 @@
         // Build arrays
         var text = '';
         if (rgg2statsRaw.valueRanges[0].values[0][0] != '0'){
-          text = rgg2statsRaw.valueRanges[0].values[0][0] + ' games were beaten in total.';
+          text = rgg2statsRaw.valueRanges[0].values[0][0] + ' games have been beaten in total.';
           rgg2statsData.push(text);
         }
         if (rgg2statsRaw.valueRanges[0].values[1][0] != '0'){
@@ -356,7 +356,7 @@
         }
         for (var i = 0; i < 16; i++){
           if (rgg2statsRaw.valueRanges[8].values[0 + i*3][0] != '0'){
-            text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games were beaten in total.';
+            text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games have been beaten in total.';
             rgg2statsData.push(text);
             text = 'A ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average.';
             rgg2statsData.push(text);

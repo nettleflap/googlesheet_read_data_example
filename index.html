@@ -203,9 +203,7 @@
           scope: SCOPES,
           discoveryDocs: DISCOVERY_DOCS
         }).then(function () {
-          fetchTextData();
           fetchDataStartSlideshow();
-          setInterval(fetchTextData, 5000);
           setInterval(fetchDataStartSlideshow, 5000);
         });
       }
@@ -222,7 +220,6 @@
       
       var rgg2statsRaw = null;
       var subListRaw = null;
-      var textRaw = null;
       
       var slideshowInterval;
       var finalListOfData = [];
@@ -247,10 +244,19 @@
                    'RGG1 Stats!B1',
                    'RGG1 Stats!D1',
                    'RGG1 List!B4',
-                   'RGG1 List!B308']
+                   'RGG1 List!B308',
+                   'RGG Random!A2:A100',
+                   'RGG Random!B2:B100',
+                   'RGG Random!C2:C100',
+                   'RGG Random!D2:D100',
+                   'RGG Random!E2',
+                   'RGG Random!F2',
+                   'RGG Random!G2']
         }).then(function(response) {
           // Fetch raw data
           rgg2statsRaw = response.result;
+          
+          organizeTextDataKeys();
           
           // Update the data that will be shown
           updateDataList();
@@ -265,33 +271,12 @@
         });
       }
       
-      function fetchTextData() {
-        gapi.client.sheets.spreadsheets.values.batchGet({
-          spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
-          ranges: ['RGG Random!A2:A100',
-                   'RGG Random!B2:B100',
-                   'RGG Random!C2:C100',
-                   'RGG Random!D2:D100',
-                   'RGG Random!E2',
-                   'RGG Random!F2',
-                   'RGG Random!G2']
-        }).then(function(response) {
-          // Fetch raw data
-          textRaw = response.result;
-          
-          organizeTextDataKeys();
-          
-        }, function(response) {
-          setText('Error: ' + response.result.error.message);
-        });
-      }
-      
       var textDataKeys = [];
       
       function organizeTextDataKeys(){
         textDataKeys = [];
-        for (var i=0; i<textRaw.valueRanges[0].values.length; i++){
-          textDataKeys.push(textRaw.valueRanges[0].values[i][0]);
+        for (var i=0; i<rgg2statsRaw.valueRanges[16].values.length; i++){
+          textDataKeys.push(rgg2statsRaw.valueRanges[16].values[i][0]);
         }
       }
       
@@ -359,8 +344,8 @@
         if (findIndex(textDataKeys, 'TOTAL_BEATEN') != -1){
           beatenIndex = findIndex(textDataKeys, 'TOTAL_BEATEN');
         }
-        if (rgg2statsRaw.valueRanges[0].values[0][0] != '0' && textRaw.valueRanges[1].values[beatenIndex][0] == 'YES'){
-          text = textRaw.valueRanges[3].values[beatenIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[0][0]);
+        if (rgg2statsRaw.valueRanges[0].values[0][0] != '0' && rgg2statsRaw.valueRanges[17].values[beatenIndex][0] == 'YES'){
+          text = rgg2statsRaw.valueRanges[19].values[beatenIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[0][0]);
           rgg2statsData.push(text);
         }
         if (rgg2statsRaw.valueRanges[0].values[1][0] != '0'){

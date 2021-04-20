@@ -278,9 +278,17 @@
           // Fetch raw data
           textRaw = response.result;
           
+          organizeTextDataKeys();
+          
         }, function(response) {
           setText('Error: ' + response.result.error.message);
         });
+      }
+      
+      var textDataKeys = [];
+      
+      function organizeTextDataKeys(){
+        console.log(textRaw[0][0]);
       }
       
       var indexArray = [];

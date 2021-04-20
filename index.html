@@ -203,9 +203,10 @@
           scope: SCOPES,
           discoveryDocs: DISCOVERY_DOCS
         }).then(function () {
+          fetchTextData();
           fetchDataStartSlideshow();
-          setInterval(fetchDataStartSlideshow, 5000);
           setInterval(fetchTextData, 5000);
+          setInterval(fetchDataStartSlideshow, 5000);
         });
       }
       
@@ -288,7 +289,10 @@
       var textDataKeys = [];
       
       function organizeTextDataKeys(){
-        console.log(textRaw.valueRanges[0].values[0][0]);
+        textDataKeys = [];
+        for (var i=0; i<textRaw.valueRanges[0].values.length; i++){
+          textDataKeys.push(console.log(textRaw.valueRanges[0].values[i][0]);
+        }
       }
       
       var indexArray = [];
@@ -351,8 +355,12 @@
         
         // Build arrays
         var text = '';
-        if (rgg2statsRaw.valueRanges[0].values[0][0] != '0'){
-          text = rgg2statsRaw.valueRanges[0].values[0][0] + ' games have been beaten in total.';
+        var beatenIndex;
+        if (findIndex(textDataKeys, 'TOTAL_BEATEN') != -1){
+          beatenIndex = findIndex(textDataKeys, 'TOTAL_BEATEN');
+        }
+        if (rgg2statsRaw.valueRanges[0].values[0][0] != '0' && textRaw.valueRanges[1].values[beatenIndex][0] == 'YES'){
+          text = textRaw.valueRanges[3].values[beatenIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[0][0]);
           rgg2statsData.push(text);
         }
         if (rgg2statsRaw.valueRanges[0].values[1][0] != '0'){
@@ -453,6 +461,7 @@
             return i;
           }
         }
+        return -1;
       }
       
       function mode(array){

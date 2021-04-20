@@ -205,6 +205,7 @@
         }).then(function () {
           fetchDataStartSlideshow();
           setInterval(fetchDataStartSlideshow, 5000);
+          setInterval(fetchTextData, 5000);
         });
       }
       
@@ -220,6 +221,7 @@
       
       var rgg2statsRaw = null;
       var subListRaw = null;
+      var textRaw = null;
       
       var slideshowInterval;
       var finalListOfData = [];
@@ -257,6 +259,25 @@
             slideshowStarted = true;
             slideshowInterval = setInterval(slideshowData, 60000);
           }
+        }, function(response) {
+          setText('Error: ' + response.result.error.message);
+        });
+      }
+      
+      function fetchTextData() {
+        gapi.client.sheets.spreadsheets.values.batchGet({
+          spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
+          ranges: ['RGG Random!A2:A100',
+                   'RGG Random!B2:B100',
+                   'RGG Random!C2:C100',
+                   'RGG Random!D2:D100',
+                   'RGG Random!E2',
+                   'RGG Random!F2',
+                   'RGG Random!G2']
+        }).then(function(response) {
+          // Fetch raw data
+          textRaw = response.result;
+          
         }, function(response) {
           setText('Error: ' + response.result.error.message);
         });
@@ -416,6 +437,14 @@
         
         // Gather them all and shuffle
         rebuildFinalList();
+      }
+      
+      function findIndex(array, tofind){
+        for(var i = 0; i < array.length; i++){
+          if (array[i] == tofind){
+            return i;
+          }
+        }
       }
       
       function mode(array){

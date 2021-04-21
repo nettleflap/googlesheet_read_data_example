@@ -289,13 +289,18 @@
       function slideshowData(){
         // if no numbers left to pick, refill numbers
         if (indexArray.length <= 0){
-          fillIndexArray(indexArray);
+          fillIndexArray(indexArray, finalListOfData.length);
         }
 
-        // random number, cap it at last index, set text
-        var randomIndex = pickRandomIndexAndRemove(indexArray);
-        randomIndex = Math.min(randomIndex, finalListOfData.length-1);
-        setText(finalListOfData[randomIndex]);
+        // choose a number, cap it at last index, set text
+        var index = 0;
+        if (rgg2statsRaw.valueRanges[22].values[0][0] == 'YES'){
+          index = pickRandomIndexAndRemove(indexArray);
+        } else {
+          index = pickOrderedIndexAndRemove(indexArray);
+        }
+        index = Math.min(index, finalListOfData.length-1);
+        setText(finalListOfData[index]);
         
         //setText(finalListOfData[slideshowIndex]);
         //slideshowIndex = (slideshowIndex+1) % finalListOfData.length;
@@ -316,8 +321,14 @@
         return chosen;
       }
       
-      function fillIndexArray(array){
-        for (var i=0; i<25; i++){
+      function pickOrderedIndexAndRemove(array){
+        var chosen = array[0];
+        array.splice(0, 1);
+        return chosen;
+      }
+      
+      function fillIndexArray(array, num){
+        for (var i=0; i<num; i++){
           array.push(i);
         }
       }

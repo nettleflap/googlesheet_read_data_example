@@ -359,18 +359,34 @@
           text = rgg2statsRaw.valueRanges[19].values[beatenIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[0][0]);
           rgg2statsData.push(text);
         }
-        if (rgg2statsRaw.valueRanges[0].values[1][0] != '0'){
-          text = rgg2statsRaw.valueRanges[0].values[1] + ' games were dropped in total.';
+        
+        var droppedIndex;
+        if (findIndex(textDataKeys, 'TOTAL_DROPPED') != -1){
+          droppedIndex = findIndex(textDataKeys, 'TOTAL_DROPPED');
+        }
+        if (rgg2statsRaw.valueRanges[0].values[1][0] != '0' && rgg2statsRaw.valueRanges[17].values[droppedIndex][0] == 'YES'){
+          text = rgg2statsRaw.valueRanges[19].values[droppedIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[1][0]);
           rgg2statsData.push(text);
         }
-        if (rgg2statsRaw.valueRanges[0].values[2][0] != '0'){
-          text = rgg2statsRaw.valueRanges[0].values[2] + ' games were rerolled in total.';
+        
+        var rerolledIndex;
+        if (findIndex(textDataKeys, 'TOTAL_REROLLED') != -1){
+          rerolledIndex = findIndex(textDataKeys, 'TOTAL_REROLLED');
+        }
+        if (rgg2statsRaw.valueRanges[0].values[2][0] != '0' && rgg2statsRaw.valueRanges[17].values[rerolledIndex][0] == 'YES'){
+          text = rgg2statsRaw.valueRanges[19].values[rerolledIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[2][0]);
           rgg2statsData.push(text);
         }
-        if (rgg2statsRaw.valueRanges[0].values[3][0] != '0'){
-          text = rgg2statsRaw.valueRanges[0].values[3] + ' games were skipped with $uper $ellout $upport in total.';
+        
+        var SSSIndex;
+        if (findIndex(textDataKeys, 'TOTAL_SSS_SKIPPED') != -1){
+          SSSIndex = findIndex(textDataKeys, 'TOTAL_SSS_SKIPPED');
+        }
+        if (rgg2statsRaw.valueRanges[0].values[3][0] != '0' && rgg2statsRaw.valueRanges[17].values[SSSIndex][0] == 'YES'){
+          text = rgg2statsRaw.valueRanges[19].values[SSSIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[3][0]);
           rgg2statsData.push(text);
         }
+        
         if (rgg2statsRaw.valueRanges[1].values[0][0] != '0:00:00'){
           text = rgg2statsRaw.valueRanges[1].values[0] + ' total time was spent.';
           rgg2statsData.push(text);

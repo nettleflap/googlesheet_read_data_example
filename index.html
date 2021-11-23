@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.07</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.08</p>
         
         <br>
         <br>
@@ -248,7 +248,7 @@
 
                 var averagetimeIndex;
                 if (findIndex(textDataKeys, 'AVERAGE_TIME_BEATEN') != -1) {
-                    totaltimeIndex = findIndex(textDataKeys, 'AVERAGE_TIME_BEATEN');
+                    averagetimeIndex = findIndex(textDataKeys, 'AVERAGE_TIME_BEATEN');
                 }
                 if (rgg2statsRaw.valueRanges[1].values[1][0] != '0:00' &&
                     rgg2statsRaw.valueRanges[17].values[averagetimeIndex][0] == 'TRUE') {
@@ -262,7 +262,7 @@
 
                 var longestgameIndex;
                 if (findIndex(textDataKeys, 'LONGEST_GAME') != -1) {
-                    totaltimeIndex = findIndex(textDataKeys, 'LONGEST_GAME');
+                    longestgameIndex = findIndex(textDataKeys, 'LONGEST_GAME');
                 }
                 if (rgg2statsRaw.valueRanges[2].values[0][0] != '' &&
                     rgg2statsRaw.valueRanges[17].values[longestgameIndex][0] == 'TRUE') {
@@ -281,7 +281,7 @@
 
                 var shortestgameIndex;
                 if (findIndex(textDataKeys, 'SHORTEST_GAME') != -1) {
-                    totaltimeIndex = findIndex(textDataKeys, 'SHORTEST_GAME');
+                    shortestgameIndex = findIndex(textDataKeys, 'SHORTEST_GAME');
                 }
                 if (rgg2statsRaw.valueRanges[2].values[0][0] != '' &&
                     rgg2statsRaw.valueRanges[17].values[shortestgameIndex][0] == 'TRUE') {

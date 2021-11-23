@@ -294,7 +294,7 @@
                 text = 'Type <b>!rgglist</b> in the chat to access list of games and RGG rules!';
                 rgg2statsData.push(text);
         
-                // Gather them all and shuffle
+                // Gather them all
                 rebuildFinalList();
                 }
       
@@ -402,29 +402,6 @@
                         var indexToRemove = array.indexOf(text);
                         array.splice(indexToRemove, 1);
                     }
-                }
-      
-                function setShuffle(){
-                    if (document.getElementById('shuffle').checked == true) {
-                        shuffle = true;
-                    } else {
-                        shuffle = false;
-                    }
-                        rebuildFinalList();
-                }
-      
-                function shuffleArray(array) {
-                    var currentIndex = array.length, temporaryValue, randomIndex;
-
-                    while (0 !== currentIndex) {
-                        randomIndex = Math.floor(Math.random() * currentIndex);
-                        currentIndex -= 1;
-
-                        temporaryValue = array[currentIndex];
-                        array[currentIndex] = array[randomIndex];
-                        array[randomIndex] = temporaryValue;
-                    }
-                    return array;
                 }
 
         </script>

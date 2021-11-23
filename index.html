@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.02</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.03</p>
         
         <br>
         <br>
@@ -136,13 +136,13 @@
                 index = Math.min(index, finalListOfData.length - 1);
                 setText(finalListOfData[index]);
 
-                /*frame.classList.add('frameappear');
+                frame.classList.add('frameappear');
                 setTimeout(function () { frame.classList.remove('frameappear'); frame.classList.add('framehide'); }, 17000);
                 setTimeout(function () { frame.classList.remove('framehide'); }, 19000);
 
                 setTimeout(function () { content.classList.add('appear'); }, 1800);
                 setTimeout(function () { content.classList.remove('appear'); content.classList.add('hide'); }, 16200);
-                setTimeout(function () { content.classList.remove('hide'); }, 17200);*/
+                setTimeout(function () { content.classList.remove('hide'); }, 17200);
             }
 
             function pickRandomIndexAndRemove(array) {
@@ -325,7 +325,8 @@
             }
 
             function formatTime(time) {
-                var numbersArray = time.split(":");
+                var timeText = time;
+                var numbersArray = timeText.split(":");
                 var formattedTime;
                 var formatWordsArray = ["hour(s)", "minute(s)", "second(s)"];
                 for (var i = 0; i < numbersArray.length; i++) {

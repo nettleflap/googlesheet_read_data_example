@@ -1,0 +1,88 @@
+﻿@font-face {
+    font-family: 'NissanOpti';
+    src: url('NissanOpti.otf') format('opentype');
+}
+
+p, label {
+    font-size: 12px;
+    color: #9f9f9f;
+}
+
+.title {
+    font-size: 20px;
+}
+
+#content {
+    font-family: "NissanOpti", sans-serif;
+    color: white;
+    font-size: 26px;
+    margin: 0;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    opacity: 0;
+}
+
+.appear {
+    -webkit-transition: 2s;
+    -moz-transition: 2s;
+    -ms-transition: 2s;
+    -o-transition: 2s;
+    transition: 1s;
+    opacity: 1 !important;
+}
+
+.hide {
+    -webkit-transition: 2s;
+    -moz-transition: 2s;
+    -ms-transition: 2s;
+    -o-transition: 2s;
+    transition: 1s;
+    opacity: 0 !important;
+}
+
+svg {
+    z-index: 10;
+    position: relative;
+    width: 2000px;
+    height: 100px;
+    top: 45%
+}
+
+#hider {
+    fill: #00FF00;
+    width: 2000px;
+    height: 100px;
+}
+
+#frame {
+    background-color: rgba(0,0,0,0);
+    height: 200px;
+    width: 2000px;
+    margin: auto;
+}
+
+.framehide {
+    -webkit-transition: 2s;
+    -moz-transition: 2s;
+    -ms-transition: 2s;
+    -o-transition: 2s;
+    transition: 2s;
+    background-color: rgba(0,0,0,0) !important;
+}
+
+.frameappear {
+    -webkit-transition: 2s;
+    -moz-transition: 2s;
+    -ms-transition: 2s;
+    -o-transition: 2s;
+    transition: 2s;
+    background-color: rgba(0,0,0,1) !important;
+}
+
+body {
+    background-color: rgba(0, 0, 0, 0) !important;
+    margin: auto;
+    text-align: center;
+}

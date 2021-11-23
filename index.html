@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.13</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.14</p>
         
         <br>
         <br>
@@ -243,7 +243,7 @@
                 }
                 if (rgg2statsRaw.valueRanges[1].values[0][0] != '0:00:00' &&
                     rgg2statsRaw.valueRanges[17].values[totaltimeIndex][0] == 'TRUE') {
-                    var time = formatTime(rgg2statsRaw.valueRanges[1].values[0]);
+                    var time = formatTime(rgg2statsRaw.valueRanges[1].values[0], true, true, true);
                     text = rgg2statsRaw.valueRanges[19].values[totaltimeIndex][0].replace('[TIME]', time);
                     var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[totaltimeIndex][0]);
                     for (var i = 0; i < frequency; i++) {
@@ -258,7 +258,7 @@
                 }
                 if (rgg2statsRaw.valueRanges[1].values[1][0] != '0:00' &&
                     rgg2statsRaw.valueRanges[17].values[averagetimeIndex][0] == 'TRUE') {
-                    var time = formatTime(rgg2statsRaw.valueRanges[1].values[1][0]);
+                    var time = formatTime(rgg2statsRaw.valueRanges[1].values[1][0], true, true, true);
                     text = rgg2statsRaw.valueRanges[19].values[averagetimeIndex][0].replace('[TIME]', time);
                     var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[averagetimeIndex][0]);
                     for (var i = 0; i < frequency; i++) {
@@ -273,7 +273,7 @@
                 }
                 if (rgg2statsRaw.valueRanges[2].values[0][0] != '' &&
                     rgg2statsRaw.valueRanges[17].values[longestgameIndex][0] == 'TRUE') {
-                    var time = formatTime(rgg2statsRaw.valueRanges[3].values[0]);
+                    var time = formatTime(rgg2statsRaw.valueRanges[3].values[0], true, true, false);
                     var game = rgg2statsRaw.valueRanges[2].values[0]
                     var platform = rgg2statsRaw.valueRanges[4].values[0];
                     text = rgg2statsRaw.valueRanges[19].values[longestgameIndex][0]
@@ -293,7 +293,7 @@
                 }
                 if (rgg2statsRaw.valueRanges[2].values[0][0] != '' &&
                     rgg2statsRaw.valueRanges[17].values[shortestgameIndex][0] == 'TRUE') {
-                    var time = formatTime(rgg2statsRaw.valueRanges[6].values[0]);
+                    var time = formatTime(rgg2statsRaw.valueRanges[6].values[0], false, true, true);
                     var game = rgg2statsRaw.valueRanges[5].values[0];
                     var platform = rgg2statsRaw.valueRanges[7].values[0];
                     text = rgg2statsRaw.valueRanges[19].values[shortestgameIndex][0]
@@ -409,19 +409,33 @@
                 rebuildFinalList();
             }
 
-            function formatTime(time) {
+            function formatTime(time, hours, minutes, seconds) {
                 var timeText = "";
                 timeText += time;
                 var numbersArray = timeText.split(':');
                 var formattedTime = "";
                 var formatWordsArray = ["hour(s)", "minute(s)", "second(s)"];
+
+                var validNumbersArray = [];
+                var validNumberIndexesArray = [];
                 for (var i = 0; i < numbersArray.length; i++) {
                     if (numbersArray[i] != "00" ||
                         numbersArray[i] != "0") {
-                        if (i > 0) {
-                            formattedTime += " ";
+                        validNumbersArray.push(numbersArray[i]);
+                        validNumberIndexesArray.push(i);
+                    }
+                }
+
+                for (var i = 0; i < numbersArray.length; i++) {
+                    if ((hours == true && i == 0) ||
+                        (minutes == true && i == 1) ||
+                        (seconds == true && i == 2)) {
+                        if (validNumberIndexesArray.find(i)) {
+                            if (validNumberIndexesArray.indexOf(i) > 0) {
+                                formattedTime += " ";
+                            }
+                            formattedTime += numbersArray[i] + " " + formatWordsArray[i];
                         }
-                        formattedTime += numbersArray[i] + " " + formatWordsArray[i];
                     }
                 }
                 return formattedTime;

@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.08</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.09</p>
         
         <br>
         <br>
@@ -181,6 +181,7 @@
                 var text = '';
                 var beatenIndex;
 
+                // Beaten
                 if (findIndex(textDataKeys, 'TOTAL_BEATEN') != -1) {
                     beatenIndex = findIndex(textDataKeys, 'TOTAL_BEATEN');
                 }
@@ -193,6 +194,7 @@
                     }
                 }
 
+                // Dropped
                 var droppedIndex;
                 if (findIndex(textDataKeys, 'TOTAL_DROPPED') != -1) {
                     droppedIndex = findIndex(textDataKeys, 'TOTAL_DROPPED');
@@ -206,6 +208,7 @@
                     }
                 }
 
+                // Rerolled
                 var rerolledIndex;
                 if (findIndex(textDataKeys, 'TOTAL_REROLLED') != -1) {
                     rerolledIndex = findIndex(textDataKeys, 'TOTAL_REROLLED');
@@ -219,6 +222,7 @@
                     }
                 }
 
+                // $$$ Skipped
                 var SSSIndex;
                 if (findIndex(textDataKeys, 'TOTAL_SSS_SKIPPED') != -1) {
                     SSSIndex = findIndex(textDataKeys, 'TOTAL_SSS_SKIPPED');
@@ -232,6 +236,7 @@
                     }
                 }
 
+                // Total time
                 var totaltimeIndex;
                 if (findIndex(textDataKeys, 'TOTAL_TIME') != -1) {
                     totaltimeIndex = findIndex(textDataKeys, 'TOTAL_TIME');
@@ -246,6 +251,7 @@
                     }
                 }
 
+                // Average time beaten
                 var averagetimeIndex;
                 if (findIndex(textDataKeys, 'AVERAGE_TIME_BEATEN') != -1) {
                     averagetimeIndex = findIndex(textDataKeys, 'AVERAGE_TIME_BEATEN');
@@ -260,6 +266,7 @@
                     }
                 }
 
+                // Longest game
                 var longestgameIndex;
                 if (findIndex(textDataKeys, 'LONGEST_GAME') != -1) {
                     longestgameIndex = findIndex(textDataKeys, 'LONGEST_GAME');
@@ -279,6 +286,7 @@
                     }
                 }
 
+                // Shortest game
                 var shortestgameIndex;
                 if (findIndex(textDataKeys, 'SHORTEST_GAME') != -1) {
                     shortestgameIndex = findIndex(textDataKeys, 'SHORTEST_GAME');
@@ -298,14 +306,52 @@
                     }
                 }
 
+                // Platform beaten, platform average time beaten, platform total time
+                var platformbeatenIndex;
+                if (findIndex(textDataKeys, 'PLATFORM_BEATEN') != -1) {
+                    platformbeatenIndex = findIndex(textDataKeys, 'PLATFORM_BEATEN');
+                }
+                var platformaveragetimeIndex;
+                if (findIndex(textDataKeys, 'PLATFORM_AVERAGE_TIME_BEATEN') != -1) {
+                    platformaveragetimeIndex = findIndex(textDataKeys, 'PLATFORM_AVERAGE_TIME_BEATEN');
+                }
+                var platformtotaltimeIndex;
+                if (findIndex(textDataKeys, 'PLATFORM_TOTAL_TIME') != -1) {
+                    platformtotaltimeIndex = findIndex(textDataKeys, 'PLATFORM_TOTAL_TIME');
+                }
                 for (var i = 0; i < 16; i++) {
                     if (rgg2statsRaw.valueRanges[8].values[0 + i * 3][0] != '0') {
-                        text = rgg2statsRaw.valueRanges[8].values[0 + i * 3] + ' ' + platforms[i] + ' games have been beaten in total.';
-                        rgg2statsData.push(text);
-                        text = 'A ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i * 3] + ' on average.';
-                        rgg2statsData.push(text);
-                        text = rgg2statsRaw.valueRanges[9].values[0 + i * 3] + ' spent on ' + platforms[i] + ' games in total.';
-                        rgg2statsData.push(text);
+                        var platform = platforms[i];
+                        if (rgg2statsRaw.valueRanges[17].values[platformbeatenIndex][0] == 'TRUE') {
+                            var number = rgg2statsRaw.valueRanges[8].values[0 + i * 3];
+                            text = rgg2statsRaw.valueRanges[19].values[platformbeatenIndex][0]
+                                .replace('[NUMBER]', number)
+                                .replace('[PLATFORM]', platform);
+                            var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[platformbeatenIndex][0]);
+                            for (var i = 0; i < frequency; i++) {
+                                rgg2statsData.push(text);
+                            }
+                        }
+                        if (rgg2statsRaw.valueRanges[17].values[platformaveragetimeIndex][0] == 'TRUE') {
+                            var time = rgg2statsRaw.valueRanges[9].values[1 + i * 3];
+                            text = rgg2statsRaw.valueRanges[19].values[platformaveragetimeIndex][0]
+                                .replace('[PLATFORM]', platform)
+                                .replace('[TIME]', time);
+                            var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[platformaveragetimeIndex][0]);
+                            for (var i = 0; i < frequency; i++) {
+                                rgg2statsData.push(text);
+                            }
+                        }
+                        if (rgg2statsRaw.valueRanges[17].values[platformtotaltimeIndex][0] == 'TRUE') {
+                            var time = rgg2statsRaw.valueRanges[9].values[0 + i * 3];
+                            text = rgg2statsRaw.valueRanges[19].values[platformtotaltimeIndex][0]
+                                .replace('[TIME]', time)
+                                .replace('[PLATFORM]', platform);
+                            var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[platformtotaltimeIndex][0]);
+                            for (var i = 0; i < frequency; i++) {
+                                rgg2statsData.push(text);
+                            }
+                        }
                     }
                 }
 

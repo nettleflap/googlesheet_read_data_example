@@ -355,7 +355,7 @@
         if (findIndex(textDataKeys, 'TOTAL_BEATEN') != -1){
           beatenIndex = findIndex(textDataKeys, 'TOTAL_BEATEN');
         }
-        if (rgg2statsRaw.valueRanges[0].values[0][0] != '0' && rgg2statsRaw.valueRanges[17].values[beatenIndex][0] == TRUE){
+        if (rgg2statsRaw.valueRanges[0].values[0][0] != '0' && rgg2statsRaw.valueRanges[17].values[beatenIndex][0] == 'TRUE'){
           text = rgg2statsRaw.valueRanges[19].values[beatenIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[0][0]);
           rgg2statsData.push(text);
         }

@@ -200,7 +200,10 @@
                 if (rgg2statsRaw.valueRanges[0].values[1][0] != '0' &&
                     rgg2statsRaw.valueRanges[17].values[droppedIndex][0] == 'TRUE') {
                     text = rgg2statsRaw.valueRanges[19].values[droppedIndex][0].replace('[NUMBER]', rgg2statsRaw.valueRanges[0].values[1][0]);
-                    rgg2statsData.push(text);
+                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[droppedIndex][0]);
+                    for (var i = 0; i < frequency; i++) {
+                        rgg2statsData.push(text);
+                    }
                 }
 
                 var rerolledIndex;
@@ -210,7 +213,10 @@
                 if (rgg2statsRaw.valueRanges[0].values[2][0] != '0' &&
                     rgg2statsRaw.valueRanges[17].values[rerolledIndex][0] == 'TRUE') {
                     text = rgg2statsRaw.valueRanges[19].values[rerolledIndex][0].replace('[NUMBER]', rgg2statsRaw.valueRanges[0].values[2][0]);
-                    rgg2statsData.push(text);
+                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[rerolledIndex][0]);
+                    for (var i = 0; i < frequency; i++) {
+                        rgg2statsData.push(text);
+                    }
                 }
 
                 var SSSIndex;
@@ -220,13 +226,26 @@
                 if (rgg2statsRaw.valueRanges[0].values[3][0] != '0' &&
                     rgg2statsRaw.valueRanges[17].values[SSSIndex][0] == 'TRUE') {
                     text = rgg2statsRaw.valueRanges[19].values[SSSIndex][0].replace('[NUMBER]', rgg2statsRaw.valueRanges[0].values[3][0]);
-                    rgg2statsData.push(text);
+                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[SSSIndex][0]);
+                    for (var i = 0; i < frequency; i++) {
+                        rgg2statsData.push(text);
+                    }
                 }
 
-                if (rgg2statsRaw.valueRanges[1].values[0][0] != '0:00:00') {
-                    text = rgg2statsRaw.valueRanges[1].values[0] + ' total time was spent.';
-                    rgg2statsData.push(text);
+                var totaltimeIndex;
+                if (findIndex(textDataKeys, 'TOTAL_TIME') != -1) {
+                    totaltimeIndex = findIndex(textDataKeys, 'TOTAL_TIME');
                 }
+                if (rgg2statsRaw.valueRanges[1].values[0][0] != '0:00:00' &&
+                    rgg2statsRaw.valueRanges[17].values[totaltimeIndex][0] == 'TRUE') {
+                    var time = formatTime(rgg2statsRaw.valueRanges[1].values[0]);
+                    text = rgg2statsRaw.valueRanges[19].values[totaltimeIndex][0].replace('[]', time);
+                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[totaltimeIndex][0]);
+                    for (var i = 0; i < frequency; i++) {
+                        rgg2statsData.push(text);
+                    }
+                }
+
                 if (rgg2statsRaw.valueRanges[1].values[1][0] != '0:00:00') {
                     text = 'Average time spent on a beaten game: ' + rgg2statsRaw.valueRanges[1].values[1][0];
                     rgg2statsData.push(text);
@@ -303,113 +322,126 @@
         
                 // Gather them all
                 rebuildFinalList();
-                }
-      
-                function findIndex(array, tofind) {
-                    for(var i = 0; i < array.length; i++) {
-                        if (array[i] == tofind) {
-                            return i;
-                        }
-                    }
-                    return -1;
-                }
-      
-                function mode(array){
-                    if (array.length == 0) {
-                        return null;
-                    }
-                    var modeMap = {};
-                    var maxEl = array[0], maxCount = 1;
-                    for(var i = 0; i < array.length; i++) {
-                        var el = array[i];
-                        if (modeMap[el] == null) {
-                            modeMap[el] = 1;
-                        } else {
-                            modeMap[el]++;
-                        }
-                        if(modeMap[el] > maxCount) {
-                            maxEl = el;
-                            maxCount = modeMap[el];
-                        }
-                    }
-                    return maxEl;
-                }
-      
-                function setGamesCompleted() {
-                    var text = 'Games beaten: ' + rgg2statsRaw.valueRanges[0].values[0];
-                    addRemoveFromDataArray(true, rgg2statsData, text);
-                    rebuildFinalList();
-                }
-      
-                function setGamesDropped() {
-                    var text = 'Games dropped: ' + rgg2statsRaw.valueRanges[0].values[1];
-	                addRemoveFromDataArray(true, rgg2statsData, text);
-                    rebuildFinalList();
-                }
-      
-                function setGamesRerolled() {
-                    var text = 'Games rerolled: ' + rgg2statsRaw.valueRanges[0].values[2];
-	                addRemoveFromDataArray(true, rgg2statsData, text);
-                    rebuildFinalList();
-                }
-      
-                function setGamesDollar() {
-                    var text = 'Games $$$: ' + rgg2statsRaw.valueRanges[0].values[3];
-	                addRemoveFromDataArray(true, rgg2statsData, text);
-                    rebuildFinalList();
-                }
-      
-                function setTotalTime() {
-                    var text = 'Total time spent: ' + rgg2statsRaw.valueRanges[1].values[0];
-	                addRemoveFromDataArray(true, rgg2statsData, text);
-                    rebuildFinalList();
-                }
-      
-                function setAverageTime() {
-                    var text = 'Average time spent on a beaten game: ' + rgg2statsRaw.valueRanges[1].values[1];
-	                addRemoveFromDataArray(true, rgg2statsData, text);
-                    rebuildFinalList();
-                }
-      
-                function setLongestGame() {
-                    var text = rgg2statsRaw.valueRanges[2].values[0] + ' (' + rgg2statsRaw.valueRanges[4].values[0] + ') was the longest game to beat with a time of ' + rgg2statsRaw.valueRanges[3].values[0] + '!';
-	                addRemoveFromDataArray(true, rgg2statsData, text);
-                    rebuildFinalList();
-                }
-      
-                function setShortestGame() {
-                    var text = rgg2statsRaw.valueRanges[5].values[0] + ' (' + rgg2statsRaw.valueRanges[7].values[0] + ') was the shortest game to beat with a time of ' + rgg2statsRaw.valueRanges[6].values[0] + '!';
-	                addRemoveFromDataArray(true, rgg2statsData, text);
-                    rebuildFinalList();
-                }
+            }
 
-                function setPlatformSpecifics() {
-                    var platforms = ['DOS','C64','NES','MSX','SMS','Amiga','TG-16','Genesis','GBC','Game Gear','SNES','Neo Geo','PS1','N64','GBA','SUB'];
-                    for (var i = 0; i < 16; i++) {
-                        var text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games were beaten. A(n) ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average. ' + rgg2statsRaw.valueRanges[9].values[0 + i*3] + ' spent on ' + platforms[i] + ' games in total.';
-	                    addRemoveFromDataArray(true, rgg2statsData, text);
+            function formatTime(time) {
+                var numbersArray = time.split(":");
+                var formattedTime;
+                var formatWordsArray = ["hour(s)", "minute(s)", "second(s)"];
+                for (var i = 0; i < numbersArray.length; i++) {
+                    if (i > 0) {
+                        formattedTime += " ";
                     }
-                    rebuildFinalList();
+                    formattedTime += numbersArray[i] + " " + formatWordsArray[i];
                 }
+                return formattedTime;
+            }
+
+            function findIndex(array, tofind) {
+                for(var i = 0; i < array.length; i++) {
+                    if (array[i] == tofind) {
+                        return i;
+                    }
+                }
+                return -1;
+            }
       
-                function setSpins(){
-                    var text = 'Wheel was spun ' + rgg2statsRaw.valueRanges[10].values.length + ' times! <i>Right round baby right round!</i>';
+            function mode(array){
+                if (array.length == 0) {
+                    return null;
+                }
+                var modeMap = {};
+                var maxEl = array[0], maxCount = 1;
+                for(var i = 0; i < array.length; i++) {
+                    var el = array[i];
+                    if (modeMap[el] == null) {
+                        modeMap[el] = 1;
+                    } else {
+                        modeMap[el]++;
+                    }
+                    if(modeMap[el] > maxCount) {
+                        maxEl = el;
+                        maxCount = modeMap[el];
+                    }
+                }
+                return maxEl;
+            }
+      
+            function setGamesCompleted() {
+                var text = 'Games beaten: ' + rgg2statsRaw.valueRanges[0].values[0];
+                addRemoveFromDataArray(true, rgg2statsData, text);
+                rebuildFinalList();
+            }
+      
+            function setGamesDropped() {
+                var text = 'Games dropped: ' + rgg2statsRaw.valueRanges[0].values[1];
+	            addRemoveFromDataArray(true, rgg2statsData, text);
+                rebuildFinalList();
+            }
+      
+            function setGamesRerolled() {
+                var text = 'Games rerolled: ' + rgg2statsRaw.valueRanges[0].values[2];
+	            addRemoveFromDataArray(true, rgg2statsData, text);
+                rebuildFinalList();
+            }
+      
+            function setGamesDollar() {
+                var text = 'Games $$$: ' + rgg2statsRaw.valueRanges[0].values[3];
+	            addRemoveFromDataArray(true, rgg2statsData, text);
+                rebuildFinalList();
+            }
+      
+            function setTotalTime() {
+                var text = 'Total time spent: ' + rgg2statsRaw.valueRanges[1].values[0];
+	            addRemoveFromDataArray(true, rgg2statsData, text);
+                rebuildFinalList();
+            }
+      
+            function setAverageTime() {
+                var text = 'Average time spent on a beaten game: ' + rgg2statsRaw.valueRanges[1].values[1];
+	            addRemoveFromDataArray(true, rgg2statsData, text);
+                rebuildFinalList();
+            }
+      
+            function setLongestGame() {
+                var text = rgg2statsRaw.valueRanges[2].values[0] + ' (' + rgg2statsRaw.valueRanges[4].values[0] + ') was the longest game to beat with a time of ' + rgg2statsRaw.valueRanges[3].values[0] + '!';
+	            addRemoveFromDataArray(true, rgg2statsData, text);
+                rebuildFinalList();
+            }
+      
+            function setShortestGame() {
+                var text = rgg2statsRaw.valueRanges[5].values[0] + ' (' + rgg2statsRaw.valueRanges[7].values[0] + ') was the shortest game to beat with a time of ' + rgg2statsRaw.valueRanges[6].values[0] + '!';
+	            addRemoveFromDataArray(true, rgg2statsData, text);
+                rebuildFinalList();
+            }
+
+            function setPlatformSpecifics() {
+                var platforms = ['DOS','C64','NES','MSX','SMS','Amiga','TG-16','Genesis','GBC','Game Gear','SNES','Neo Geo','PS1','N64','GBA','SUB'];
+                for (var i = 0; i < 16; i++) {
+                    var text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games were beaten. A(n) ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average. ' + rgg2statsRaw.valueRanges[9].values[0 + i*3] + ' spent on ' + platforms[i] + ' games in total.';
 	                addRemoveFromDataArray(true, rgg2statsData, text);
-                    rebuildFinalList();
                 }
+                rebuildFinalList();
+            }
       
-                // the person who spun the wheel most times
-                // wheel spin result least
-                // inventory stats
+            function setSpins(){
+                var text = 'Wheel was spun ' + rgg2statsRaw.valueRanges[10].values.length + ' times! <i>Right round baby right round!</i>';
+	            addRemoveFromDataArray(true, rgg2statsData, text);
+                rebuildFinalList();
+            }
       
-                function addRemoveFromDataArray(check, array, text){
-                    if (check == true) {
-                        array.push(text);
-                    } else if (array.indexOf(text) != -1) {
-                        var indexToRemove = array.indexOf(text);
-                        array.splice(indexToRemove, 1);
-                    }
+            // the person who spun the wheel most times
+            // wheel spin result least
+            // inventory stats
+      
+            function addRemoveFromDataArray(check, array, text){
+                if (check == true) {
+                    array.push(text);
+                } else if (array.indexOf(text) != -1) {
+                    var indexToRemove = array.indexOf(text);
+                    array.splice(indexToRemove, 1);
                 }
+            }
 
         </script>
 

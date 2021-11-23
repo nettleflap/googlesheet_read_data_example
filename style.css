@@ -3,7 +3,7 @@
     src: url('NissanOpti.otf') format('opentype');
 }
 
-p, label {
+p {
     font-size: 12px;
     color: #9f9f9f;
 }
@@ -40,20 +40,6 @@ p, label {
     -o-transition: 2s;
     transition: 1s;
     opacity: 0 !important;
-}
-
-svg {
-    z-index: 10;
-    position: relative;
-    width: 2000px;
-    height: 100px;
-    top: 45%
-}
-
-#hider {
-    fill: #00FF00;
-    width: 2000px;
-    height: 100px;
 }
 
 #frame {

@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.06</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.07</p>
         
         <br>
         <br>
@@ -239,24 +239,63 @@
                 if (rgg2statsRaw.valueRanges[1].values[0][0] != '0:00:00' &&
                     rgg2statsRaw.valueRanges[17].values[totaltimeIndex][0] == 'TRUE') {
                     var time = formatTime(rgg2statsRaw.valueRanges[1].values[0]);
-                    text = rgg2statsRaw.valueRanges[19].values[totaltimeIndex][0].replace('[]', time);
+                    text = rgg2statsRaw.valueRanges[19].values[totaltimeIndex][0].replace('[TIME]', time);
                     var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[totaltimeIndex][0]);
                     for (var i = 0; i < frequency; i++) {
                         rgg2statsData.push(text);
                     }
                 }
 
-                if (rgg2statsRaw.valueRanges[1].values[1][0] != '0:00:00') {
-                    text = 'Average time spent on a beaten game: ' + rgg2statsRaw.valueRanges[1].values[1][0];
-                    rgg2statsData.push(text);
+                var averagetimeIndex;
+                if (findIndex(textDataKeys, 'AVERAGE_TIME_BEATEN') != -1) {
+                    totaltimeIndex = findIndex(textDataKeys, 'AVERAGE_TIME_BEATEN');
                 }
-                if (rgg2statsRaw.valueRanges[2].values[0][0] != '') {
-                    text = rgg2statsRaw.valueRanges[2].values[0] + ' (' + rgg2statsRaw.valueRanges[4].values[0] + ') was the longest game to beat with a time of ' + rgg2statsRaw.valueRanges[3].values[0] + '!';
-                    rgg2statsData.push(text);
+                if (rgg2statsRaw.valueRanges[1].values[1][0] != '0:00' &&
+                    rgg2statsRaw.valueRanges[17].values[averagetimeIndex][0] == 'TRUE') {
+                    var time = formatTime(rgg2statsRaw.valueRanges[1].values[1][0]);
+                    text = rgg2statsRaw.valueRanges[19].values[averagetimeIndex][0].replace('[TIME]', time);
+                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[averagetimeIndex][0]);
+                    for (var i = 0; i < frequency; i++) {
+                        rgg2statsData.push(text);
+                    }
                 }
-                if (rgg2statsRaw.valueRanges[5].values[0][0] != '') {
-                    text = rgg2statsRaw.valueRanges[5].values[0] + ' (' + rgg2statsRaw.valueRanges[7].values[0] + ') was the shortest game to beat with a time of ' + rgg2statsRaw.valueRanges[6].values[0] + '!';
-                    rgg2statsData.push(text);
+
+                var longestgameIndex;
+                if (findIndex(textDataKeys, 'LONGEST_GAME') != -1) {
+                    totaltimeIndex = findIndex(textDataKeys, 'LONGEST_GAME');
+                }
+                if (rgg2statsRaw.valueRanges[2].values[0][0] != '' &&
+                    rgg2statsRaw.valueRanges[17].values[longestgameIndex][0] == 'TRUE') {
+                    var time = formatTime(rgg2statsRaw.valueRanges[3].values[0]);
+                    var game = rgg2statsRaw.valueRanges[2].values[0]
+                    var platform = rgg2statsRaw.valueRanges[4].values[0];
+                    text = rgg2statsRaw.valueRanges[19].values[longestgameIndex][0]
+                        .replace('[GAME]', game)
+                        .replace('[PLATFORM]', platform)
+                        .replace('[TIME]', time);
+                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[longestgameIndex][0]);
+                    for (var i = 0; i < frequency; i++) {
+                        rgg2statsData.push(text);
+                    }
+                }
+
+                var shortestgameIndex;
+                if (findIndex(textDataKeys, 'SHORTEST_GAME') != -1) {
+                    totaltimeIndex = findIndex(textDataKeys, 'SHORTEST_GAME');
+                }
+                if (rgg2statsRaw.valueRanges[2].values[0][0] != '' &&
+                    rgg2statsRaw.valueRanges[17].values[shortestgameIndex][0] == 'TRUE') {
+                    var time = formatTime(rgg2statsRaw.valueRanges[6].values[0]);
+                    var game = rgg2statsRaw.valueRanges[5].values[0];
+                    var platform = rgg2statsRaw.valueRanges[7].values[0];
+                    text = rgg2statsRaw.valueRanges[19].values[shortestgameIndex][0]
+                        .replace('[GAME]', game)
+                        .replace('[PLATFORM]', platform)
+                        .replace('[TIME]', time);
+                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[shortestgameIndex][0]);
+                    for (var i = 0; i < frequency; i++) {
+                        rgg2statsData.push(text);
+                    }
                 }
 
                 for (var i = 0; i < 16; i++) {

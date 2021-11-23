@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.10</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.11</p>
         
         <br>
         <br>
@@ -413,13 +413,16 @@
                 var timeText = "";
                 timeText += time;
                 const numbersArray = timeText.split(':');
-                var formattedTime;
+                var formattedTime = "";
                 var formatWordsArray = ["hour(s)", "minute(s)", "second(s)"];
                 for (var i = 0; i < numbersArray.length; i++) {
-                    if (i > 0) {
-                        formattedTime += " ";
+                    if (numbersArray[i] != '00' ||
+                        numbersArray[i] != '0') {
+                        if (i > 0) {
+                            formattedTime += " ";
+                        }
+                        formattedTime += numbersArray[i] + " " + formatWordsArray[i];
                     }
-                    formattedTime += numbersArray[i] + " " + formatWordsArray[i];
                 }
                 return formattedTime;
             }

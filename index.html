@@ -1,440 +1,437 @@
 ﻿<!DOCTYPE html>
 <html>
-  <head>
-    <title>TMR RGG2 INFO SLIDESHOW</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="style.css">
-  </head>
-  
-  <body>
-    <p class="title">TMR RGG2 INFO SLIDESHOW</p>
-    
-    <br>
-    <br>
-    
-    <div id="frame">
-      <p id="content"></p>
-    </div>
-    
-    <script type="text/javascript">
-      // Client ID and API key from the Developer Console
-      var CLIENT_ID = '110449457142-u01dfg0mhqn2eis7pm3q42ook22i9kkj.apps.googleusercontent.com';
-      var API_KEY = 'AIzaSyAmg2WiuGV5muem_wRzV6h-8uX2gUVjVcA';
+    <head>
+        <title>TMR RGG2 INFO SLIDESHOW</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css">
+    </head>
 
-      // Array of API discovery doc URLs for APIs used by the quickstart
-      var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+    <body>
+        <p class="title">TMR RGG2 INFO SLIDESHOW</p>
+        
+        <br>
+        <br>
+        
+        <div id="frame">
+            <p id="content"></p>
+        </div>
+        
+        <script type="text/javascript">
+            // Client ID and API key from the Developer Console
+            var CLIENT_ID = '110449457142-u01dfg0mhqn2eis7pm3q42ook22i9kkj.apps.googleusercontent.com';
+            var API_KEY = 'AIzaSyAmg2WiuGV5muem_wRzV6h-8uX2gUVjVcA';
 
-      // Authorization scopes required by the API; multiple scopes can be
-      // included, separated by spaces.
-      var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
+            // Array of API discovery doc URLs for APIs used by the quickstart
+            var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 
-      /**
-       *  On load, called to load the auth2 library and API client library.
-       */
-      function handleClientLoad() {
-        gapi.load('client', initClient);
-      }
+            // Authorization scopes required by the API; multiple scopes can be
+            // included, separated by spaces.
+            var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
-      /**
-       *  Initializes the API client library and sets up sign-in state
-       *  listeners.
-       */
-      function initClient() {
-        gapi.client.init({
-          clientId: CLIENT_ID,
-          apiKey: API_KEY,
-          scope: SCOPES,
-          discoveryDocs: DISCOVERY_DOCS
-        }).then(function () {
-          fetchDataStartSlideshow();
-          setInterval(fetchDataStartSlideshow, 5000);
-        });
-      }
-      
-      function setText(text) {
-        document.getElementById('content').innerHTML = text;
-      }
-
-      var rgg2statsData = [];
-      var subListData = [];
-      var customMessageData = [];
-      
-      var rgg2statsRaw = null;
-      var subListRaw = null;
-      
-      var slideshowInterval;
-      var finalListOfData = [];
-      
-      var slideshowStarted = false;
-      
-      function fetchDataStartSlideshow() {
-        gapi.client.sheets.spreadsheets.values.batchGet({
-          spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
-          ranges: ['RGG2 Stats!B1:B4',
-                   'RGG2 Stats!D1:D2',
-                   'RGG2 Stats!C3',
-                   'RGG2 Stats!D3',
-                   'RGG2 Stats!F3',
-                   'RGG2 Stats!C4',
-                   'RGG2 Stats!D4',
-                   'RGG2 Stats!F4',
-                   'RGG2 Stats!B32:B79',
-                   'RGG2 Stats!D32:D79',
-                   'WheelSpins Season2!C2:C400',
-                   'WheelSpins Season2!E2:E400',
-                   'RGG1 Stats!B1',
-                   'RGG1 Stats!D1',
-                   'RGG1 List!B4',
-                   'RGG1 List!B308',
-                   'RGG Random!A2:A100',
-                   'RGG Random!B2:B100',
-                   'RGG Random!C2:C100',
-                   'RGG Random!D2:D100',
-                   'RGG Random!E2',
-                   'RGG Random!F2',
-                   'RGG Random!G2']
-        }).then(function(response) {
-          // Fetch raw data
-          rgg2statsRaw = response.result;
-          
-          organizeTextDataKeys();
-          
-          // Update the data that will be shown
-          updateDataList();
-          
-          // Start slideshow, only once
-          if (slideshowStarted == false){
-            slideshowStarted = true;
-            slideshowInterval = setInterval(slideshowData, 60000);
-          }
-        }, function(response) {
-          setText('Error: ' + response.result.error.message);
-        });
-      }
-      
-      var textDataKeys = [];
-      
-      function organizeTextDataKeys(){
-        textDataKeys = [];
-        for (var i=0; i<rgg2statsRaw.valueRanges[16].values.length; i++){
-          textDataKeys.push(rgg2statsRaw.valueRanges[16].values[i][0]);
-        }
-      }
-      
-      var indexArray = [];
-      var content = document.getElementById('content');
-			var frame = document.getElementById('frame');
-      var platforms = ['DOS','C64','NES','MSX','SMS','Amiga','TG-16','Genesis','GBC','Game Gear','SNES','Neo Geo','PS1','N64','GBA','SUB'];
-      
-      function slideshowData(){
-        // if no numbers left to pick, refill numbers
-        if (indexArray.length <= 0){
-          fillIndexArray(indexArray, finalListOfData.length);
-        }
-
-        // choose a number, cap it at last index, set text
-        var index = 0;
-        if (rgg2statsRaw.valueRanges[22].values[0][0] == 'YES'){
-          index = pickRandomIndexAndRemove(indexArray);
-        } else {
-          index = pickOrderedIndexAndRemove(indexArray);
-        }
-        index = Math.min(index, finalListOfData.length-1);
-        setText(finalListOfData[index]);
-        
-        frame.classList.add('frameappear');
-        setTimeout(function(){ frame.classList.remove('frameappear'); frame.classList.add('framehide'); }, 17000);
-        setTimeout(function(){ frame.classList.remove('framehide'); }, 19000);
-        
-        setTimeout(function(){ content.classList.add('appear'); }, 1800);
-        setTimeout(function(){ content.classList.remove('appear'); content.classList.add('hide'); }, 16200);
-        setTimeout(function(){ content.classList.remove('hide'); }, 17200);
-      }
-      
-      function pickRandomIndexAndRemove(array){
-        var randomIndex = getRndInteger(0, array.length-1);
-        var chosen = array[randomIndex];
-        array.splice(randomIndex, 1);
-        return chosen;
-      }
-      
-      function pickOrderedIndexAndRemove(array){
-        var chosen = array[0];
-        array.splice(0, 1);
-        return chosen;
-      }
-      
-      function fillIndexArray(array, num){
-        for (var i=0; i<num; i++){
-          array.push(i);
-        }
-      }
-      
-      function getRndInteger(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) ) + min;
-      }
-      
-      function rebuildFinalList(){
-        finalListOfData = [];
-        finalListOfData = rgg2statsData;
-      }
-      
-      function updateDataList(){
-        // Empty arrays
-        rgg2statsData = [];
-        
-        // Build arrays
-        var text = '';
-        var beatenIndex;
-        if (findIndex(textDataKeys, 'TOTAL_BEATEN') != -1){
-          beatenIndex = findIndex(textDataKeys, 'TOTAL_BEATEN');
-        }
-        if (rgg2statsRaw.valueRanges[0].values[0][0] != '0' && rgg2statsRaw.valueRanges[17].values[beatenIndex][0] == 'TRUE'){
-          text = rgg2statsRaw.valueRanges[19].values[beatenIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[0][0]);
-          rgg2statsData.push(text);
-        }
-        
-        var droppedIndex;
-        if (findIndex(textDataKeys, 'TOTAL_DROPPED') != -1){
-          droppedIndex = findIndex(textDataKeys, 'TOTAL_DROPPED');
-        }
-        if (rgg2statsRaw.valueRanges[0].values[1][0] != '0' && rgg2statsRaw.valueRanges[17].values[droppedIndex][0] == 'YES'){
-          text = rgg2statsRaw.valueRanges[19].values[droppedIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[1][0]);
-          rgg2statsData.push(text);
-        }
-        
-        var rerolledIndex;
-        if (findIndex(textDataKeys, 'TOTAL_REROLLED') != -1){
-          rerolledIndex = findIndex(textDataKeys, 'TOTAL_REROLLED');
-        }
-        if (rgg2statsRaw.valueRanges[0].values[2][0] != '0' && rgg2statsRaw.valueRanges[17].values[rerolledIndex][0] == 'YES'){
-          text = rgg2statsRaw.valueRanges[19].values[rerolledIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[2][0]);
-          rgg2statsData.push(text);
-        }
-        
-        var SSSIndex;
-        if (findIndex(textDataKeys, 'TOTAL_SSS_SKIPPED') != -1){
-          SSSIndex = findIndex(textDataKeys, 'TOTAL_SSS_SKIPPED');
-        }
-        if (rgg2statsRaw.valueRanges[0].values[3][0] != '0' && rgg2statsRaw.valueRanges[17].values[SSSIndex][0] == 'YES'){
-          text = rgg2statsRaw.valueRanges[19].values[SSSIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[3][0]);
-          rgg2statsData.push(text);
-        }
-        
-        if (rgg2statsRaw.valueRanges[1].values[0][0] != '0:00:00'){
-          text = rgg2statsRaw.valueRanges[1].values[0] + ' total time was spent.';
-          rgg2statsData.push(text);
-        }
-        if (rgg2statsRaw.valueRanges[1].values[1][0] != '0:00:00'){
-          text = 'Average time spent on a beaten game: ' + rgg2statsRaw.valueRanges[1].values[1][0];
-          rgg2statsData.push(text);
-        }
-        if (rgg2statsRaw.valueRanges[2].values[0][0] != ''){
-          text = rgg2statsRaw.valueRanges[2].values[0] + ' (' + rgg2statsRaw.valueRanges[4].values[0] + ') was the longest game to beat with a time of ' + rgg2statsRaw.valueRanges[3].values[0] + '!';
-          rgg2statsData.push(text);
-        }
-        if (rgg2statsRaw.valueRanges[5].values[0][0] != ''){
-          text = rgg2statsRaw.valueRanges[5].values[0] + ' (' + rgg2statsRaw.valueRanges[7].values[0] + ') was the shortest game to beat with a time of ' + rgg2statsRaw.valueRanges[6].values[0] + '!';
-          rgg2statsData.push(text);
-        }
-        for (var i = 0; i < 16; i++){
-          if (rgg2statsRaw.valueRanges[8].values[0 + i*3][0] != '0'){
-            text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games have been beaten in total.';
-            rgg2statsData.push(text);
-            text = 'A ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average.';
-            rgg2statsData.push(text);
-            text = rgg2statsRaw.valueRanges[9].values[0 + i*3] + ' spent on ' + platforms[i] + ' games in total.';
-            rgg2statsData.push(text);
-          }
-        }
-        if (rgg2statsRaw.valueRanges[10].values.length != 0){
-          var numberOfSpins = rgg2statsRaw.valueRanges[10].values.length;
-          var spinTypes = [];
-          for (var i=0; i<rgg2statsRaw.valueRanges[10].values.length; i++){
-            var entry = rgg2statsRaw.valueRanges[10].values[i][0];
-            if (entry == 'Used Hint' || entry == 'Used Potion'){
-              numberOfSpins--;
-            } else {
-              spinTypes.push(entry);
+            // On load, called to load the auth2 library and API client library.
+            function handleClientLoad() {
+                gapi.load('client', initClient);
             }
-          }
-          
-          if (numberOfSpins > 0){
-            text = 'Wheel was spun ' + numberOfSpins + ' times!';
-            rgg2statsData.push(text);
-            var mostOccured = mode(spinTypes);
-            text = 'Most occured wheel prize/punishment was ' + mostOccured + '.';
-            rgg2statsData.push(text);
-          }
-        }
-        // INVENTORY
-        var inventoryLast = rgg2statsRaw.valueRanges[11].values[rgg2statsRaw.valueRanges[11].values.length - 1][0];
-        var numberOfHints = inventoryLast.split(' ')[1].slice(0, -1);
-        var numberOfPotions = inventoryLast.split(' ')[3];
-        text = 'TMR currently has ' + numberOfHints + ' hints and ' + numberOfPotions + ' reroll potions in his inventory.';
-        rgg2statsData.push(text);
+
+            // Initializes the API client library and sets up sign-in state listeners.
+            function initClient() {
+                gapi.client.init({
+                    clientId: CLIENT_ID,
+                    apiKey: API_KEY,
+                    scope: SCOPES,
+                    discoveryDocs: DISCOVERY_DOCS
+                }).then(function () {
+                    fetchDataStartSlideshow();
+                    setInterval(fetchDataStartSlideshow, 5000);
+                });
+            }
+
+            function setText(text) {
+                document.getElementById('content').innerHTML = text;
+            }
+
+            var rgg2statsData = [];
+            var subListData = [];
+            var customMessageData = [];
+            var rgg2statsRaw = null;
+            var subListRaw = null;
+
+            var slideshowInterval;
+            var finalListOfData = [];
+
+            var slideshowStarted = false;
+
+            function fetchDataStartSlideshow() {
+                gapi.client.sheets.spreadsheets.values.batchGet({
+                    spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
+                    ranges: ['RGG2 Stats!B1:B4',
+                             'RGG2 Stats!D1:D2',
+                             'RGG2 Stats!C3',
+                             'RGG2 Stats!D3',
+                             'RGG2 Stats!F3',
+                             'RGG2 Stats!C4',
+                             'RGG2 Stats!D4',
+                             'RGG2 Stats!F4',
+                             'RGG2 Stats!B32:B79',
+                             'RGG2 Stats!D32:D79',
+                             'WheelSpins Season2!C2:C400',
+                             'WheelSpins Season2!E2:E400',
+                             'RGG1 Stats!B1',
+                             'RGG1 Stats!D1',
+                             'RGG1 List!B4',
+                             'RGG1 List!B308',
+                             'RGG Random!A2:A100',
+                             'RGG Random!B2:B100',
+                             'RGG Random!C2:C100',
+                             'RGG Random!D2:D100',
+                             'RGG Random!E2',
+                             'RGG Random!F2',
+                             'RGG Random!G2']
+                }).then(function (response) {
+                    // Fetch raw data
+                    rgg2statsRaw = response.result;
+
+                    organizeTextDataKeys();
+
+                    // Update the data that will be shown
+                    updateDataList();
+
+                    // Start slideshow, only once
+                    if (slideshowStarted == false) {
+                        slideshowStarted = true;
+                        slideshowInterval = setInterval(slideshowData, 60000);
+                    }
+                }, function (response) {
+                    setText('Error: ' + response.result.error.message);
+                });
+            }
+
+            var textDataKeys = [];
+
+            function organizeTextDataKeys() {
+                textDataKeys = [];
+                for (var i = 0; i < rgg2statsRaw.valueRanges[16].values.length; i++) {
+                    textDataKeys.push(rgg2statsRaw.valueRanges[16].values[i][0]);
+                }
+            }
+
+            var indexArray = [];
+            var content = document.getElementById('content');
+            var frame = document.getElementById('frame');
+            var platforms = ['DOS', 'C64', 'NES', 'MSX', 'SMS', 'Amiga', 'TG-16', 'Genesis', 'GBC', 'Game Gear', 'SNES', 'Neo Geo', 'PS1', 'N64', 'GBA', 'SUB'];
+
+            function slideshowData() {
+                // if no numbers left to pick, refill numbers
+                if (indexArray.length <= 0) {
+                    fillIndexArray(indexArray, finalListOfData.length);
+                }
+
+                // choose a number, cap it at last index, set text
+                var index = 0;
+                if (rgg2statsRaw.valueRanges[22].values[0][0] == 'YES') {
+                    index = pickRandomIndexAndRemove(indexArray);
+                } else {
+                    index = pickOrderedIndexAndRemove(indexArray);
+                }
+                index = Math.min(index, finalListOfData.length - 1);
+                setText(finalListOfData[index]);
+
+                frame.classList.add('frameappear');
+                setTimeout(function () { frame.classList.remove('frameappear'); frame.classList.add('framehide'); }, 17000);
+                setTimeout(function () { frame.classList.remove('framehide'); }, 19000);
+
+                setTimeout(function () { content.classList.add('appear'); }, 1800);
+                setTimeout(function () { content.classList.remove('appear'); content.classList.add('hide'); }, 16200);
+                setTimeout(function () { content.classList.remove('hide'); }, 17200);
+            }
+
+            function pickRandomIndexAndRemove(array) {
+                var randomIndex = getRndInteger(0, array.length - 1);
+                var chosen = array[randomIndex];
+                array.splice(randomIndex, 1);
+                return chosen;
+            }
+
+            function pickOrderedIndexAndRemove(array) {
+                var chosen = array[0];
+                array.splice(0, 1);
+                return chosen;
+            }
+
+            function fillIndexArray(array, num) {
+                for (var i = 0; i < num; i++) {
+                    array.push(i);
+                }
+            }
+
+            function getRndInteger(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function rebuildFinalList() {
+                finalListOfData = [];
+                finalListOfData = rgg2statsData;
+            }
+
+            function updateDataList() {
+                // Empty arrays
+                rgg2statsData = [];
+
+                // Build arrays
+                var text = '';
+                var beatenIndex;
+
+                if (findIndex(textDataKeys, 'TOTAL_BEATEN') != -1) {
+                    beatenIndex = findIndex(textDataKeys, 'TOTAL_BEATEN');
+                }
+                if (rgg2statsRaw.valueRanges[0].values[0][0] != '0' && rgg2statsRaw.valueRanges[17].values[beatenIndex][0] == 'TRUE') {
+                    text = rgg2statsRaw.valueRanges[19].values[beatenIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[0][0]);
+                    rgg2statsData.push(text);
+                }
+
+                var droppedIndex;
+                if (findIndex(textDataKeys, 'TOTAL_DROPPED') != -1) {
+                    droppedIndex = findIndex(textDataKeys, 'TOTAL_DROPPED');
+                }
+                if (rgg2statsRaw.valueRanges[0].values[1][0] != '0' && rgg2statsRaw.valueRanges[17].values[droppedIndex][0] == 'YES') {
+                    text = rgg2statsRaw.valueRanges[19].values[droppedIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[1][0]);
+                    rgg2statsData.push(text);
+                }
+
+                var rerolledIndex;
+                if (findIndex(textDataKeys, 'TOTAL_REROLLED') != -1) {
+                    rerolledIndex = findIndex(textDataKeys, 'TOTAL_REROLLED');
+                }
+                if (rgg2statsRaw.valueRanges[0].values[2][0] != '0' && rgg2statsRaw.valueRanges[17].values[rerolledIndex][0] == 'YES') {
+                    text = rgg2statsRaw.valueRanges[19].values[rerolledIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[2][0]);
+                    rgg2statsData.push(text);
+                }
+
+                var SSSIndex;
+                if (findIndex(textDataKeys, 'TOTAL_SSS_SKIPPED') != -1) {
+                    SSSIndex = findIndex(textDataKeys, 'TOTAL_SSS_SKIPPED');
+                }
+                if (rgg2statsRaw.valueRanges[0].values[3][0] != '0' && rgg2statsRaw.valueRanges[17].values[SSSIndex][0] == 'YES') {
+                    text = rgg2statsRaw.valueRanges[19].values[SSSIndex][0].replace('[]', rgg2statsRaw.valueRanges[0].values[3][0]);
+                    rgg2statsData.push(text);
+                }
+
+                if (rgg2statsRaw.valueRanges[1].values[0][0] != '0:00:00') {
+                    text = rgg2statsRaw.valueRanges[1].values[0] + ' total time was spent.';
+                    rgg2statsData.push(text);
+                }
+                if (rgg2statsRaw.valueRanges[1].values[1][0] != '0:00:00') {
+                    text = 'Average time spent on a beaten game: ' + rgg2statsRaw.valueRanges[1].values[1][0];
+                    rgg2statsData.push(text);
+                }
+                if (rgg2statsRaw.valueRanges[2].values[0][0] != '') {
+                    text = rgg2statsRaw.valueRanges[2].values[0] + ' (' + rgg2statsRaw.valueRanges[4].values[0] + ') was the longest game to beat with a time of ' + rgg2statsRaw.valueRanges[3].values[0] + '!';
+                    rgg2statsData.push(text);
+                }
+                if (rgg2statsRaw.valueRanges[5].values[0][0] != '') {
+                    text = rgg2statsRaw.valueRanges[5].values[0] + ' (' + rgg2statsRaw.valueRanges[7].values[0] + ') was the shortest game to beat with a time of ' + rgg2statsRaw.valueRanges[6].values[0] + '!';
+                    rgg2statsData.push(text);
+                }
+
+                for (var i = 0; i < 16; i++) {
+                    if (rgg2statsRaw.valueRanges[8].values[0 + i * 3][0] != '0') {
+                        text = rgg2statsRaw.valueRanges[8].values[0 + i * 3] + ' ' + platforms[i] + ' games have been beaten in total.';
+                        rgg2statsData.push(text);
+                        text = 'A ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i * 3] + ' on average.';
+                        rgg2statsData.push(text);
+                        text = rgg2statsRaw.valueRanges[9].values[0 + i * 3] + ' spent on ' + platforms[i] + ' games in total.';
+                        rgg2statsData.push(text);
+                    }
+                }
+
+                if (rgg2statsRaw.valueRanges[10].values.length != 0) {
+                    var numberOfSpins = rgg2statsRaw.valueRanges[10].values.length;
+                    var spinTypes = [];
+                    for (var i = 0; i < rgg2statsRaw.valueRanges[10].values.length; i++) {
+                        var entry = rgg2statsRaw.valueRanges[10].values[i][0];
+                        if (entry == 'Used Hint' || entry == 'Used Potion') {
+                            numberOfSpins--;
+                        } else {
+                            spinTypes.push(entry);
+                        }
+                    }
+
+                    if (numberOfSpins > 0) {
+                        text = 'Wheel was spun ' + numberOfSpins + ' times!';
+                        rgg2statsData.push(text);
+                        var mostOccured = mode(spinTypes);
+                        text = 'Most occured wheel prize/punishment was ' + mostOccured + '.';
+                        rgg2statsData.push(text);
+                    }
+                }
+                // INVENTORY
+                var inventoryLast = rgg2statsRaw.valueRanges[11].values[rgg2statsRaw.valueRanges[11].values.length - 1][0];
+                var numberOfHints = inventoryLast.split(' ')[1].slice(0, -1);
+                var numberOfPotions = inventoryLast.split(' ')[3];
+                text = 'TMR currently has ' + numberOfHints + ' hints and ' + numberOfPotions + ' reroll potions in his inventory.';
+                rgg2statsData.push(text);
         
-        // RGG1
-        var rggdate1 = rgg2statsRaw.valueRanges[14].values[0][0].split(' ')[0] + ' ' + rgg2statsRaw.valueRanges[14].values[0][0].split(' ')[2];
-        var rggdate2 = rgg2statsRaw.valueRanges[15].values[0][0].split(' ')[0] + ' ' + rgg2statsRaw.valueRanges[15].values[0][0].split(' ')[2];
-        text = 'TMR beat ' + rgg2statsRaw.valueRanges[12].values[0][0] + ' games during RGG1. It took him ' + rgg2statsRaw.valueRanges[13].values[0][0] + ' in total from ' + rggdate1 + ' to ' + rggdate2 + '.';
-        rgg2statsData.push(text);
+                // RGG1
+                var rggdate1 = rgg2statsRaw.valueRanges[14].values[0][0].split(' ')[0] + ' ' + rgg2statsRaw.valueRanges[14].values[0][0].split(' ')[2];
+                var rggdate2 = rgg2statsRaw.valueRanges[15].values[0][0].split(' ')[0] + ' ' + rgg2statsRaw.valueRanges[15].values[0][0].split(' ')[2];
+                text = 'TMR beat ' + rgg2statsRaw.valueRanges[12].values[0][0] + ' games during RGG1. It took him ' + rgg2statsRaw.valueRanges[13].values[0][0] + ' in total from ' + rggdate1 + ' to ' + rggdate2 + '.';
+                rgg2statsData.push(text);
         
-        text = 'RGG TL:DR = TMR must beat 1 randomly picked game per system BUT subs & donations add extra games.';
-        rgg2statsData.push(text);
-        text = 'You can submit a game to the SUB game list by typing <b>!addgame Title (Platform)</b> in the chat!';
-        rgg2statsData.push(text);
-        text = 'Except certain wheel results, games for RGG are chosen randomly.';
-        rgg2statsData.push(text);
-        text = 'If TMR gives up on a game, he has to either beat 2 games instead or go back to the previous platform.';
-        rgg2statsData.push(text);
-        text = 'A new game is added every time a SUB or DONATION incentive is met. This also triggers the wheel.';
-        rgg2statsData.push(text);
-        text = '$uper $ellout $upport: Collectively donate $100 to skip current game. Just add $$$ to your message.';
-        rgg2statsData.push(text);
-        text = 'Every sub can submit 1 game per month. Only official games from RGG platforms are allowed!';
-        rgg2statsData.push(text);
-        text = 'Type <b>!rgglist</b> in the chat to access list of games and RGG rules!';
-        rgg2statsData.push(text);
+                text = 'RGG TL:DR = TMR must beat 1 randomly picked game per system BUT subs & donations add extra games.';
+                rgg2statsData.push(text);
+                text = 'You can submit a game to the SUB game list by typing <b>!addgame Title (Platform)</b> in the chat!';
+                rgg2statsData.push(text);
+                text = 'Except certain wheel results, games for RGG are chosen randomly.';
+                rgg2statsData.push(text);
+                text = 'If TMR gives up on a game, he has to either beat 2 games instead or go back to the previous platform.';
+                rgg2statsData.push(text);
+                text = 'A new game is added every time a SUB or DONATION incentive is met. This also triggers the wheel.';
+                rgg2statsData.push(text);
+                text = '$uper $ellout $upport: Collectively donate $100 to skip current game. Just add $$$ to your message.';
+                rgg2statsData.push(text);
+                text = 'Every sub can submit 1 game per month. Only official games from RGG platforms are allowed!';
+                rgg2statsData.push(text);
+                text = 'Type <b>!rgglist</b> in the chat to access list of games and RGG rules!';
+                rgg2statsData.push(text);
         
-        // Gather them all and shuffle
-        rebuildFinalList();
-      }
+                // Gather them all and shuffle
+                rebuildFinalList();
+                }
       
-      function findIndex(array, tofind){
-        for(var i = 0; i < array.length; i++){
-          if (array[i] == tofind){
-            return i;
-          }
-        }
-        return -1;
-      }
+                function findIndex(array, tofind) {
+                    for(var i = 0; i < array.length; i++) {
+                        if (array[i] == tofind) {
+                            return i;
+                        }
+                    }
+                    return -1;
+                }
       
-      function mode(array){
-          if(array.length == 0)
-              return null;
-          var modeMap = {};
-          var maxEl = array[0], maxCount = 1;
-          for(var i = 0; i < array.length; i++)
-          {
-              var el = array[i];
-              if(modeMap[el] == null)
-                  modeMap[el] = 1;
-              else
-                  modeMap[el]++;  
-              if(modeMap[el] > maxCount)
-              {
-                  maxEl = el;
-                  maxCount = modeMap[el];
-              }
-          }
-          return maxEl;
-      }
+                function mode(array){
+                    if (array.length == 0) {
+                        return null;
+                    }
+                    var modeMap = {};
+                    var maxEl = array[0], maxCount = 1;
+                    for(var i = 0; i < array.length; i++) {
+                        var el = array[i];
+                        if (modeMap[el] == null) {
+                            modeMap[el] = 1;
+                        } else {
+                            modeMap[el]++;
+                        }
+                        if(modeMap[el] > maxCount) {
+                            maxEl = el;
+                            maxCount = modeMap[el];
+                        }
+                    }
+                    return maxEl;
+                }
       
-      function setGamesCompleted(){
-        var text = 'Games beaten: ' + rgg2statsRaw.valueRanges[0].values[0];
-        addRemoveFromDataArray(true, rgg2statsData, text);
-        rebuildFinalList();
-      }
+                function setGamesCompleted() {
+                    var text = 'Games beaten: ' + rgg2statsRaw.valueRanges[0].values[0];
+                    addRemoveFromDataArray(true, rgg2statsData, text);
+                    rebuildFinalList();
+                }
       
-      function setGamesDropped(){
-        var text = 'Games dropped: ' + rgg2statsRaw.valueRanges[0].values[1];
-	addRemoveFromDataArray(true, rgg2statsData, text);
-        rebuildFinalList();
-      }
+                function setGamesDropped() {
+                    var text = 'Games dropped: ' + rgg2statsRaw.valueRanges[0].values[1];
+	                addRemoveFromDataArray(true, rgg2statsData, text);
+                    rebuildFinalList();
+                }
       
-      function setGamesRerolled(){
-        var text = 'Games rerolled: ' + rgg2statsRaw.valueRanges[0].values[2];
-	addRemoveFromDataArray(true, rgg2statsData, text);
-        rebuildFinalList();
-      }
+                function setGamesRerolled() {
+                    var text = 'Games rerolled: ' + rgg2statsRaw.valueRanges[0].values[2];
+	                addRemoveFromDataArray(true, rgg2statsData, text);
+                    rebuildFinalList();
+                }
       
-      function setGamesDollar(){
-        var text = 'Games $$$: ' + rgg2statsRaw.valueRanges[0].values[3];
-	addRemoveFromDataArray(true, rgg2statsData, text);
-        rebuildFinalList();
-      }
+                function setGamesDollar() {
+                    var text = 'Games $$$: ' + rgg2statsRaw.valueRanges[0].values[3];
+	                addRemoveFromDataArray(true, rgg2statsData, text);
+                    rebuildFinalList();
+                }
       
-      function setTotalTime(){
-        var text = 'Total time spent: ' + rgg2statsRaw.valueRanges[1].values[0];
-	addRemoveFromDataArray(true, rgg2statsData, text);
-        rebuildFinalList();
-      }
+                function setTotalTime() {
+                    var text = 'Total time spent: ' + rgg2statsRaw.valueRanges[1].values[0];
+	                addRemoveFromDataArray(true, rgg2statsData, text);
+                    rebuildFinalList();
+                }
       
-      function setAverageTime(){
-        var text = 'Average time spent on a beaten game: ' + rgg2statsRaw.valueRanges[1].values[1];
-	addRemoveFromDataArray(true, rgg2statsData, text);
-        rebuildFinalList();
-      }
+                function setAverageTime() {
+                    var text = 'Average time spent on a beaten game: ' + rgg2statsRaw.valueRanges[1].values[1];
+	                addRemoveFromDataArray(true, rgg2statsData, text);
+                    rebuildFinalList();
+                }
       
-      function setLongestGame(){
-        var text = rgg2statsRaw.valueRanges[2].values[0] + ' (' + rgg2statsRaw.valueRanges[4].values[0] + ') was the longest game to beat with a time of ' + rgg2statsRaw.valueRanges[3].values[0] + '!';
-	addRemoveFromDataArray(true, rgg2statsData, text);
-        rebuildFinalList();
-      }
+                function setLongestGame() {
+                    var text = rgg2statsRaw.valueRanges[2].values[0] + ' (' + rgg2statsRaw.valueRanges[4].values[0] + ') was the longest game to beat with a time of ' + rgg2statsRaw.valueRanges[3].values[0] + '!';
+	                addRemoveFromDataArray(true, rgg2statsData, text);
+                    rebuildFinalList();
+                }
       
-      function setShortestGame(){
-        var text = rgg2statsRaw.valueRanges[5].values[0] + ' (' + rgg2statsRaw.valueRanges[7].values[0] + ') was the shortest game to beat with a time of ' + rgg2statsRaw.valueRanges[6].values[0] + '!';
-	addRemoveFromDataArray(true, rgg2statsData, text);
-        rebuildFinalList();
-      }
+                function setShortestGame() {
+                    var text = rgg2statsRaw.valueRanges[5].values[0] + ' (' + rgg2statsRaw.valueRanges[7].values[0] + ') was the shortest game to beat with a time of ' + rgg2statsRaw.valueRanges[6].values[0] + '!';
+	                addRemoveFromDataArray(true, rgg2statsData, text);
+                    rebuildFinalList();
+                }
 
-      function setPlatformSpecifics(){
-        var platforms = ['DOS','C64','NES','MSX','SMS','Amiga','TG-16','Genesis','GBC','Game Gear','SNES','Neo Geo','PS1','N64','GBA','SUB'];
-        for (var i = 0; i < 16; i++){
-          var text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games were beaten. A(n) ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average. ' + rgg2statsRaw.valueRanges[9].values[0 + i*3] + ' spent on ' + platforms[i] + ' games in total.';
-	  addRemoveFromDataArray(true, rgg2statsData, text);
-        }
-        rebuildFinalList();
-      }
+                function setPlatformSpecifics() {
+                    var platforms = ['DOS','C64','NES','MSX','SMS','Amiga','TG-16','Genesis','GBC','Game Gear','SNES','Neo Geo','PS1','N64','GBA','SUB'];
+                    for (var i = 0; i < 16; i++) {
+                        var text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games were beaten. A(n) ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average. ' + rgg2statsRaw.valueRanges[9].values[0 + i*3] + ' spent on ' + platforms[i] + ' games in total.';
+	                    addRemoveFromDataArray(true, rgg2statsData, text);
+                    }
+                    rebuildFinalList();
+                }
       
-      function setSpins(){
-        var text = 'Wheel was spun ' + rgg2statsRaw.valueRanges[10].values.length + ' times! <i>Right round baby right round!</i>';
-	addRemoveFromDataArray(true, rgg2statsData, text);
-        rebuildFinalList();
-      }
+                function setSpins(){
+                    var text = 'Wheel was spun ' + rgg2statsRaw.valueRanges[10].values.length + ' times! <i>Right round baby right round!</i>';
+	                addRemoveFromDataArray(true, rgg2statsData, text);
+                    rebuildFinalList();
+                }
       
-      // the person who spun the wheel most times
-      // wheel spin result least
-      // inventory stats
+                // the person who spun the wheel most times
+                // wheel spin result least
+                // inventory stats
       
-      function addRemoveFromDataArray(check, array, text){
-        if (check == true){
-          array.push(text);
-        } else if (array.indexOf(text) != -1) {
-          var indexToRemove = array.indexOf(text);
-          array.splice(indexToRemove, 1);
-        }
-      }
+                function addRemoveFromDataArray(check, array, text){
+                    if (check == true) {
+                        array.push(text);
+                    } else if (array.indexOf(text) != -1) {
+                        var indexToRemove = array.indexOf(text);
+                        array.splice(indexToRemove, 1);
+                    }
+                }
       
-      function setShuffle(){
-        if (document.getElementById('shuffle').checked == true){
-          shuffle = true;
-        } else {
-          shuffle = false;
-        }
-        rebuildFinalList();
-      }
+                function setShuffle(){
+                    if (document.getElementById('shuffle').checked == true) {
+                        shuffle = true;
+                    } else {
+                        shuffle = false;
+                    }
+                        rebuildFinalList();
+                }
       
-      function shuffleArray(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
+                function shuffleArray(array) {
+                    var currentIndex = array.length, temporaryValue, randomIndex;
 
-        while (0 !== currentIndex) {
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex -= 1;
+                    while (0 !== currentIndex) {
+                        randomIndex = Math.floor(Math.random() * currentIndex);
+                        currentIndex -= 1;
 
-          temporaryValue = array[currentIndex];
-          array[currentIndex] = array[randomIndex];
-          array[randomIndex] = temporaryValue;
-        }
-        return array;
-      }
+                        temporaryValue = array[currentIndex];
+                        array[currentIndex] = array[randomIndex];
+                        array[randomIndex] = temporaryValue;
+                    }
+                    return array;
+                }
 
-    </script>
+        </script>
 
-    <script async defer src="https://apis.google.com/js/api.js"
-      onload="this.onload=function(){};handleClientLoad()"
-      onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>
-  </body>
+        <script async defer src="https://apis.google.com/js/api.js"
+            onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+        </script>
+    </body>
 </html>

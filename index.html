@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.14</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.15</p>
         
         <br>
         <br>
@@ -430,7 +430,7 @@
                     if ((hours == true && i == 0) ||
                         (minutes == true && i == 1) ||
                         (seconds == true && i == 2)) {
-                        if (validNumberIndexesArray.find(i)) {
+                        if (validNumberIndexesArray.includes(i)) {
                             if (validNumberIndexesArray.indexOf(i) > 0) {
                                 formattedTime += " ";
                             }

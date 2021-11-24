@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.19</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.20</p>
         
         <br>
         <br>
@@ -436,23 +436,21 @@
                         rgg2statsData.push(text);
                     }
                 }
-        
-                text = 'RGG TL:DR = TMR must beat 1 randomly picked game per system BUT subs & donations add extra games.';
-                rgg2statsData.push(text);
-                text = 'You can submit a game to the SUB game list by typing <b>!addgame Title (Platform)</b> in the chat!';
-                rgg2statsData.push(text);
-                text = 'Except certain wheel results, games for RGG are chosen randomly.';
-                rgg2statsData.push(text);
-                text = 'If TMR gives up on a game, he has to either beat 2 games instead or go back to the previous platform.';
-                rgg2statsData.push(text);
-                text = 'A new game is added every time a SUB or DONATION incentive is met. This also triggers the wheel.';
-                rgg2statsData.push(text);
-                text = '$uper $ellout $upport: Collectively donate $100 to skip current game. Just add $$$ to your message.';
-                rgg2statsData.push(text);
-                text = 'Every sub can submit 1 game per month. Only official games from RGG platforms are allowed!';
-                rgg2statsData.push(text);
-                text = 'Type <b>!rgglist</b> in the chat to access list of games and RGG rules!';
-                rgg2statsData.push(text);
+
+                // No variable only text entries
+                var novotIndexes = [];
+                if (findIndex(textDataKeys, 'NO_VARIABLE_ONLY_TEXT') != -1) {
+                    novotIndexes.push(findIndexes(textDataKeys, 'RGG1_STATS'));
+                }
+                for (var i = 0; i < novotIndexes.length; i++) {
+                    if (rgg2statsRaw.valueRanges[17].values[novotIndexes[i]][0] == 'TRUE') {
+                        text = rgg2statsRaw.valueRanges[19].values[novotIndexes[i]][0];
+                        var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[novotIndexes[i]][0]);
+                        for (var i = 0; i < frequency; i++) {
+                            rgg2statsData.push(text);
+                        }
+                    }
+                }
         
                 // Gather them all
                 rebuildFinalList();
@@ -495,6 +493,16 @@
                     }
                 }
                 return -1;
+            }
+
+            function findIndexes(array, tofind) {
+                var outputArray = [];
+                for (var i = 0; i < array.length; i++) {
+                    if (array[i] == tofind) {
+                        outputArray.push(i);
+                    }
+                }
+                return outputArray;
             }
       
             function mode(array){

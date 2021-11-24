@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.17</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.18</p>
         
         <br>
         <br>
@@ -356,6 +356,15 @@
                     }
                 }*/
 
+                // Wheel spins, most occured prize
+                var wheelspinsIndex;
+                if (findIndex(textDataKeys, 'WHEEL_SPINS') != -1) {
+                    wheelspinsIndex = findIndex(textDataKeys, 'WHEEL_SPINS');
+                }
+                var mostoccuredprizeIndex;
+                if (findIndex(textDataKeys, 'MOST_OCCURED_PRIZE') != -1) {
+                    mostoccuredprizeIndex = findIndex(textDataKeys, 'MOST_OCCURED_PRIZE');
+                }
                 if (rgg2statsRaw.valueRanges[10].values.length != 0) {
                     var numberOfSpins = rgg2statsRaw.valueRanges[10].values.length;
                     var spinTypes = [];
@@ -369,13 +378,26 @@
                     }
 
                     if (numberOfSpins > 0) {
-                        text = 'Wheel was spun ' + numberOfSpins + ' times!';
-                        rgg2statsData.push(text);
-                        var mostOccured = mode(spinTypes);
-                        text = 'Most occured wheel prize/punishment was ' + mostOccured + '.';
-                        rgg2statsData.push(text);
+                        if (rgg2statsRaw.valueRanges[17].values[wheelspinsIndex][0] == 'TRUE') {
+                            text = rgg2statsRaw.valueRanges[19].values[wheelspinsIndex][0]
+                                .replace('[NUMBER]', numberOfSpins);
+                            var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[wheelspinsIndex][0]);
+                            for (var i = 0; i < frequency; i++) {
+                                rgg2statsData.push(text);
+                            }
+                        }
+                        if (rgg2statsRaw.valueRanges[17].values[mostoccuredprizeIndex][0] == 'TRUE') {
+                            var mostOccured = mode(spinTypes);
+                            text = rgg2statsRaw.valueRanges[19].values[mostoccuredprizeIndex][0]
+                                .replace('[NUMBER]', mostOccured);
+                            var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[mostoccuredprizeIndex][0]);
+                            for (var i = 0; i < frequency; i++) {
+                                rgg2statsData.push(text);
+                            }
+                        }
                     }
                 }
+
                 // INVENTORY
                 var inventoryLast = rgg2statsRaw.valueRanges[11].values[rgg2statsRaw.valueRanges[11].values.length - 1][0];
                 var numberOfHints = inventoryLast.split(' ')[1].slice(0, -1);

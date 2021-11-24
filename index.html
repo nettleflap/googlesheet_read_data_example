@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.48</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.49</p>
         
         <br>
         <br>
@@ -446,7 +446,8 @@
                 if (findIndex(textDataKeys, 'NO_VARIABLE_ONLY_TEXT') != -1) {
                     novotIndexes = findIndexes(textDataKeys, 'NO_VARIABLE_ONLY_TEXT');
                 }
-                for (var i = 0; i < novotIndexes.length; i++) {
+                console.log(novotIndexes.length);
+                /*for (var i = 0; i < novotIndexes.length; i++) {
                     if (rgg2statsRaw.valueRanges[17].values[novotIndexes[i]][0] == 'TRUE') {
                         text = rgg2statsRaw.valueRanges[19].values[novotIndexes[i]][0];
                         frequency = parseInt(rgg2statsRaw.valueRanges[18].values[novotIndexes[i]][0]);
@@ -454,7 +455,7 @@
                             rgg2statsData.push(text);
                         }
                     }
-                }
+                }*/
         
                 // Gather them all
                 rebuildFinalList();

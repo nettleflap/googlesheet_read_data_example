@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.24</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.25</p>
         
         <br>
         <br>
@@ -456,7 +456,7 @@
                 // No variable only text entries
                 var novotIndexes = [];
                 if (findIndex(textDataKeys, 'NO_VARIABLE_ONLY_TEXT') != -1) {
-                    novotIndexes.push(findIndexes(textDataKeys, 'NO_VARIABLE_ONLY_TEXT'));
+                    var novotIndexes = findIndexes(textDataKeys, 'NO_VARIABLE_ONLY_TEXT');
                 }
                 for (var i = 0; i < novotIndexes.length; i++) {
                     if (rgg2statsRaw.valueRanges[17].values[novotIndexes[i]][0] == 'TRUE') {

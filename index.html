@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.51</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.52</p>
         
         <br>
         <br>
@@ -448,12 +448,13 @@
                 }
                 console.log(novotIndexes.length);
                 for (var i = 0; i < novotIndexes.length; i++) {
-                    if (rgg2statsRaw.valueRanges[17].values[novotIndexes[i]][0] == 'TRUE') {
-                        text = rgg2statsRaw.valueRanges[19].values[novotIndexes[i]][0];
-                        frequency = parseInt(rgg2statsRaw.valueRanges[18].values[novotIndexes[i]][0]);
-                        /*for (var i = 0; i < frequency; i++) {
+                    var index = novotIndexes[i];
+                    if (rgg2statsRaw.valueRanges[17].values[index][0] == 'TRUE') {
+                        text = rgg2statsRaw.valueRanges[19].values[index][0];
+                        var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[index][0]);
+                        for (var i = 0; i < frequency; i++) {
                             rgg2statsData.push(text);
-                        }*/
+                        }
                     }
                 }
         

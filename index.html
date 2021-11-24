@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.20</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.21</p>
         
         <br>
         <br>
@@ -64,29 +64,30 @@
             function fetchDataStartSlideshow() {
                 gapi.client.sheets.spreadsheets.values.batchGet({
                     spreadsheetId: '1lm4tNN8QsGK6UT1OF-3DIkRdXJs2dd7No6KeOiEy1tM',
-                    ranges: ['RGG2 Stats!B1:B4',
-                             'RGG2 Stats!D1:D2',
-                             'RGG2 Stats!C3',
-                             'RGG2 Stats!D3',
-                             'RGG2 Stats!F3',
-                             'RGG2 Stats!C4',
-                             'RGG2 Stats!D4',
-                             'RGG2 Stats!F4',
-                             'RGG2 Stats!B32:B79',
-                             'RGG2 Stats!D32:D79',
-                             'WheelSpins Season2!C2:C400',
-                             'WheelSpins Season2!E2:E400',
-                             'RGG1 Stats!B1',
-                             'RGG1 Stats!D1',
-                             'RGG1 List!B4',
-                             'RGG1 List!B308',
-                             'RGG Random!A2:A100',
-                             'RGG Random!B2:B100',
-                             'RGG Random!C2:C100',
-                             'RGG Random!D2:D100',
-                             'RGG Random!E2',
-                             'RGG Random!F2',
-                             'RGG Random!G2']
+                    ranges: ['RGG2 Stats!B1:B4',                // 0
+                             'RGG2 Stats!D1:D2',                // 1
+                             'RGG2 Stats!C3',                   // 2
+                             'RGG2 Stats!D3',                   // 3
+                             'RGG2 Stats!F3',                   // 4
+                             'RGG2 Stats!C4',                   // 5
+                             'RGG2 Stats!D4',                   // 6
+                             'RGG2 Stats!F4',                   // 7
+                             'RGG2 Stats!B32:B79',              // 8
+                             'RGG2 Stats!D32:D79',              // 9
+                             'WheelSpins Season2!C2:C500',      // 10
+                             'WheelSpins Season2!E2:E500',      // 11
+                             'RGG1 Stats!B1',                   // 12
+                             'RGG1 Stats!D1',                   // 13
+                             'RGG1 List!B4',                    // 14
+                             'RGG1 List!B308',                  // 15
+                             'RGG Random!A2:A100',              // 16
+                             'RGG Random!B2:B100',              // 17
+                             'RGG Random!C2:C100',              // 18
+                             'RGG Random!D2:D100',              // 19
+                             'RGG Random!E2',                   // 20
+                             'RGG Random!F2',                   // 21
+                             'RGG Random!G2',                   // 22
+                             'RGG2 Stats!C24']                  // 23
                 }).then(function (response) {
                     // Fetch raw data
                     rgg2statsRaw = response.result;
@@ -389,7 +390,7 @@
                         if (rgg2statsRaw.valueRanges[17].values[mostoccuredprizeIndex][0] == 'TRUE') {
                             var mostOccured = mode(spinTypes);
                             text = rgg2statsRaw.valueRanges[19].values[mostoccuredprizeIndex][0]
-                                .replace('[NUMBER]', mostOccured);
+                                .replace('[WHEELRESULT]', mostOccured);
                             var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[mostoccuredprizeIndex][0]);
                             for (var i = 0; i < frequency; i++) {
                                 rgg2statsData.push(text);
@@ -426,12 +427,27 @@
                     var time = formatTime(rgg2statsRaw.valueRanges[13].values[0][0], true, false, false);
                     var rggdate1 = rgg2statsRaw.valueRanges[14].values[0][0].split(' ')[0] + ' ' + rgg2statsRaw.valueRanges[14].values[0][0].split(' ')[2];
                     var rggdate2 = rgg2statsRaw.valueRanges[15].values[0][0].split(' ')[0] + ' ' + rgg2statsRaw.valueRanges[15].values[0][0].split(' ')[2];
-                    text = rgg2statsRaw.valueRanges[19].values[inventoryIndex][0]
+                    text = rgg2statsRaw.valueRanges[19].values[rgg1statsIndex][0]
                                 .replace('[NUMBER]', number)
                                 .replace('[TIME]', time)
                                 .replace('[DATE]', rggdate1)
                                 .replace('[DATE2]', rggdate2);
                     var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[rgg1statsIndex][0]);
+                    for (var i = 0; i < frequency; i++) {
+                        rgg2statsData.push(text);
+                    }
+                }
+
+                // Reset counter
+                var resetcounterIndex;
+                if (findIndex(textDataKeys, 'RESET_COUNTER') != -1) {
+                    resetcounterIndex = findIndex(textDataKeys, 'RESET_COUNTER');
+                }
+                if (rgg2statsRaw.valueRanges[17].values[resetcounterIndex][0] == 'TRUE') {
+                    var number = rgg2statsRaw.valueRanges[23].values[0][0];
+                    text = rgg2statsRaw.valueRanges[19].values[resetcounterIndex][0]
+                                .replace('[NUMBER]', number);
+                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[resetcounterIndex][0]);
                     for (var i = 0; i < frequency; i++) {
                         rgg2statsData.push(text);
                     }

@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.15</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.16</p>
         
         <br>
         <br>
@@ -426,16 +426,14 @@
                     }
                 }
 
-                for (var i = 0; i < numbersArray.length; i++) {
-                    if ((hours == true && i == 0) ||
-                        (minutes == true && i == 1) ||
-                        (seconds == true && i == 2)) {
-                        if (validNumberIndexesArray.includes(i)) {
-                            if (validNumberIndexesArray.indexOf(i) > 0) {
-                                formattedTime += " ";
-                            }
-                            formattedTime += numbersArray[i] + " " + formatWordsArray[i];
+                for (var i = 0; i < validNumbersArray.length; i++) {
+                    if ((hours == true && validNumberIndexesArray[i] == 0) ||
+                        (minutes == true && validNumberIndexesArray[i] == 1) ||
+                        (seconds == true && validNumberIndexesArray[i] == 2)) {
+                        if (i > 0) {
+                            formattedTime += " ";
                         }
+                        formattedTime += validNumbersArray[i] + " " + formatWordsArray[validNumberIndexesArray[i]];
                     }
                 }
                 return formattedTime;

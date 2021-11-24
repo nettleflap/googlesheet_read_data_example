@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.29</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.30</p>
         
         <br>
         <br>
@@ -74,8 +74,8 @@
                              'RGG2 Stats!F4',                   // 7
                              'RGG2 Stats!B32:B79',              // 8
                              'RGG2 Stats!D32:D79',              // 9
-                             'WheelSpins Season2!C2:C500',      // 10
-                             'WheelSpins Season2!E2:E500',      // 11
+                             'WheelSpins Season2!F2:F21',       // 10
+                             'WheelSpins Season2!G2',           // 11
                              'RGG1 Stats!B1',                   // 12
                              'RGG1 Stats!D1',                   // 13
                              'RGG1 List!B4',                    // 14
@@ -378,28 +378,23 @@
                     mostoccuredprizeIndex = findIndex(textDataKeys, 'MOST_OCCURED_PRIZE');
                 }
                 if (rgg2statsRaw.valueRanges[10].values.length != 0) {
-                    var numberOfSpins = rgg2statsRaw.valueRanges[10].values.length;
-                    var spinTypes = [];
-                    for (var i = 0; i < rgg2statsRaw.valueRanges[10].values.length; i++) {
-                        var entry = rgg2statsRaw.valueRanges[10].values[i][0];
-                        if (entry == 'Used Hint' || entry == 'Used Potion') {
-                            numberOfSpins--;
-                        } else {
-                            spinTypes.push(entry);
-                        }
+                    number = 0;
+                    var spinEntries = rgg2statsRaw.valueRanges[10].values;
+                    for (var i = 0; i < spinEntries.length; i++) {
+                        number += parseInt(spinEntries[i]);
                     }
 
-                    if (numberOfSpins > 0) {
+                    if (number > 0) {
                         if (rgg2statsRaw.valueRanges[17].values[wheelspinsIndex][0] == 'TRUE') {
                             text = rgg2statsRaw.valueRanges[19].values[wheelspinsIndex][0]
-                                .replace('[NUMBER]', numberOfSpins);
+                                .replace('[NUMBER]', number);
                             frequency = parseInt(rgg2statsRaw.valueRanges[18].values[wheelspinsIndex][0]);
                             for (var i = 0; i < frequency; i++) {
                                 rgg2statsData.push(text);
                             }
                         }
                         if (rgg2statsRaw.valueRanges[17].values[mostoccuredprizeIndex][0] == 'TRUE') {
-                            var mostOccured = mode(spinTypes);
+                            var mostOccured = rgg2statsRaw.valueRanges[11].values[0][0];
                             text = rgg2statsRaw.valueRanges[19].values[mostoccuredprizeIndex][0]
                                 .replace('[WHEELRESULT]', mostOccured);
                             frequency = parseInt(rgg2statsRaw.valueRanges[18].values[mostoccuredprizeIndex][0]);
@@ -407,24 +402,6 @@
                                 rgg2statsData.push(text);
                             }
                         }
-                    }
-                }
-
-                // Inventory
-                var inventoryIndex;
-                if (findIndex(textDataKeys, 'TMR_INVENTORY') != -1) {
-                    inventoryIndex = findIndex(textDataKeys, 'TMR_INVENTORY');
-                }
-                if (rgg2statsRaw.valueRanges[17].values[inventoryIndex][0] == 'TRUE') {
-                    var inventoryLast = rgg2statsRaw.valueRanges[11].values[rgg2statsRaw.valueRanges[11].values.length - 1][0];
-                    number = inventoryLast.split(' ')[1].slice(0, -1);
-                    var numberOfPotions = inventoryLast.split(' ')[3];
-                    text = rgg2statsRaw.valueRanges[19].values[inventoryIndex][0]
-                                .replace('[NUMBER]', number)
-                                .replace('[NUMBER2]', numberOfPotions);
-                    frequency = parseInt(rgg2statsRaw.valueRanges[18].values[inventoryIndex][0]);
-                    for (var i = 0; i < frequency; i++) {
-                        rgg2statsData.push(text);
                     }
                 }
 

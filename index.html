@@ -80,14 +80,12 @@
                              'RGG1 Stats!D1',                   // 13
                              'RGG1 List!B4',                    // 14
                              'RGG1 List!B308',                  // 15
-                             'RGG Random!A2:A100',              // 16
-                             'RGG Random!B2:B100',              // 17
-                             'RGG Random!C2:C100',              // 18
-                             'RGG Random!D2:D100',              // 19
-                             'RGG Random!E2',                   // 20
-                             'RGG Random!F2',                   // 21
-                             'RGG Random!G2',                   // 22
-                             'RGG2 Stats!C24']                  // 23
+                             'RGG Random!A2:A40',               // 16
+                             'RGG Random!B2:B40',               // 17
+                             'RGG Random!C2:C40',               // 18
+                             'RGG Random!D2:D40',               // 19
+                             'RGG Random!F2',                   // 20
+                             'RGG2 Stats!C24']                  // 21
                 }).then(function (response) {
                     // Fetch raw data
                     rgg2statsRaw = response.result;
@@ -129,7 +127,7 @@
 
                 // choose a number, cap it at last index, set text
                 var index = 0;
-                if (rgg2statsRaw.valueRanges[22].values[0][0] == 'TRUE') {
+                if (rgg2statsRaw.valueRanges[20].values[0][0] == 'TRUE') {
                     index = pickRandomIndexAndRemove(indexArray);
                 } else {
                     index = pickOrderedIndexAndRemove(indexArray);

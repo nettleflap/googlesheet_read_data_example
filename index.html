@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.18</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.19</p>
         
         <br>
         <br>
@@ -398,18 +398,44 @@
                     }
                 }
 
-                // INVENTORY
-                var inventoryLast = rgg2statsRaw.valueRanges[11].values[rgg2statsRaw.valueRanges[11].values.length - 1][0];
-                var numberOfHints = inventoryLast.split(' ')[1].slice(0, -1);
-                var numberOfPotions = inventoryLast.split(' ')[3];
-                text = 'TMR currently has ' + numberOfHints + ' hints and ' + numberOfPotions + ' reroll potions in his inventory.';
-                rgg2statsData.push(text);
-        
-                // RGG1
-                var rggdate1 = rgg2statsRaw.valueRanges[14].values[0][0].split(' ')[0] + ' ' + rgg2statsRaw.valueRanges[14].values[0][0].split(' ')[2];
-                var rggdate2 = rgg2statsRaw.valueRanges[15].values[0][0].split(' ')[0] + ' ' + rgg2statsRaw.valueRanges[15].values[0][0].split(' ')[2];
-                text = 'TMR beat ' + rgg2statsRaw.valueRanges[12].values[0][0] + ' games during RGG1. It took him ' + rgg2statsRaw.valueRanges[13].values[0][0] + ' in total from ' + rggdate1 + ' to ' + rggdate2 + '.';
-                rgg2statsData.push(text);
+                // Inventory
+                var inventoryIndex;
+                if (findIndex(textDataKeys, 'TMR_INVENTORY') != -1) {
+                    inventoryIndex = findIndex(textDataKeys, 'TMR_INVENTORY');
+                }
+                if (rgg2statsRaw.valueRanges[17].values[inventoryIndex][0] == 'TRUE') {
+                    var inventoryLast = rgg2statsRaw.valueRanges[11].values[rgg2statsRaw.valueRanges[11].values.length - 1][0];
+                    var numberOfHints = inventoryLast.split(' ')[1].slice(0, -1);
+                    var numberOfPotions = inventoryLast.split(' ')[3];
+                    text = rgg2statsRaw.valueRanges[19].values[inventoryIndex][0]
+                                .replace('[NUMBER]', numberOfHints)
+                                .replace('[NUMBER2]', numberOfPotions);
+                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[inventoryIndex][0]);
+                    for (var i = 0; i < frequency; i++) {
+                        rgg2statsData.push(text);
+                    }
+                }
+
+                // RGG1 stats
+                var rgg1statsIndex;
+                if (findIndex(textDataKeys, 'RGG1_STATS') != -1) {
+                    rgg1statsIndex = findIndex(textDataKeys, 'RGG1_STATS');
+                }
+                if (rgg2statsRaw.valueRanges[17].values[rgg1statsIndex][0] == 'TRUE') {
+                    var number = rgg2statsRaw.valueRanges[12].values[0][0];
+                    var time = formatTime(rgg2statsRaw.valueRanges[13].values[0][0], true, false, false);
+                    var rggdate1 = rgg2statsRaw.valueRanges[14].values[0][0].split(' ')[0] + ' ' + rgg2statsRaw.valueRanges[14].values[0][0].split(' ')[2];
+                    var rggdate2 = rgg2statsRaw.valueRanges[15].values[0][0].split(' ')[0] + ' ' + rgg2statsRaw.valueRanges[15].values[0][0].split(' ')[2];
+                    text = rgg2statsRaw.valueRanges[19].values[inventoryIndex][0]
+                                .replace('[NUMBER]', number)
+                                .replace('[TIME]', time)
+                                .replace('[DATE]', rggdate1)
+                                .replace('[DATE2]', rggdate2);
+                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[rgg1statsIndex][0]);
+                    for (var i = 0; i < frequency; i++) {
+                        rgg2statsData.push(text);
+                    }
+                }
         
                 text = 'RGG TL:DR = TMR must beat 1 randomly picked game per system BUT subs & donations add extra games.';
                 rgg2statsData.push(text);

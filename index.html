@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.58</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.59</p>
         
         <br>
         <br>
@@ -346,7 +346,7 @@
                             }
                         }
                         if (rgg2statsRaw.valueRanges[17].values[platformaveragetimeIndex][0] == 'TRUE') {
-                            time = rgg2statsRaw.valueRanges[9].values[1 + i * 3];
+                            time = formatTime(rgg2statsRaw.valueRanges[9].values[1 + i * 3]);
                             text = rgg2statsRaw.valueRanges[19].values[platformaveragetimeIndex][0]
                                 .replace('[PLATFORM]', platform)
                                 .replace('[TIME]', time);
@@ -356,7 +356,7 @@
                             }
                         }
                         if (rgg2statsRaw.valueRanges[17].values[platformtotaltimeIndex][0] == 'TRUE') {
-                            time = rgg2statsRaw.valueRanges[9].values[0 + i * 3];
+                            time = formatTime(rgg2statsRaw.valueRanges[9].values[0 + i * 3]);
                             text = rgg2statsRaw.valueRanges[19].values[platformtotaltimeIndex][0]
                                 .replace('[TIME]', time)
                                 .replace('[PLATFORM]', platform);

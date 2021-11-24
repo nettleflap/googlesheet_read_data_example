@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.16</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.17</p>
         
         <br>
         <br>
@@ -293,7 +293,7 @@
                 }
                 if (rgg2statsRaw.valueRanges[2].values[0][0] != '' &&
                     rgg2statsRaw.valueRanges[17].values[shortestgameIndex][0] == 'TRUE') {
-                    var time = formatTime(rgg2statsRaw.valueRanges[6].values[0], false, true, true);
+                    var time = formatTime(rgg2statsRaw.valueRanges[6].values[0], false, false, true);
                     var game = rgg2statsRaw.valueRanges[5].values[0];
                     var platform = rgg2statsRaw.valueRanges[7].values[0];
                     text = rgg2statsRaw.valueRanges[19].values[shortestgameIndex][0]
@@ -307,7 +307,7 @@
                 }
 
                 // Platform beaten, platform average time beaten, platform total time
-                /*var platformbeatenIndex;
+                var platformbeatenIndex;
                 if (findIndex(textDataKeys, 'PLATFORM_BEATEN') != -1) {
                     platformbeatenIndex = findIndex(textDataKeys, 'PLATFORM_BEATEN');
                 }
@@ -319,6 +319,7 @@
                 if (findIndex(textDataKeys, 'PLATFORM_TOTAL_TIME') != -1) {
                     platformtotaltimeIndex = findIndex(textDataKeys, 'PLATFORM_TOTAL_TIME');
                 }
+                /*
                 for (var i = 0; i < 16; i++) {
                     if (rgg2statsRaw.valueRanges[8].values[0 + i * 3][0] != '0') {
                         var platform = platforms[i];

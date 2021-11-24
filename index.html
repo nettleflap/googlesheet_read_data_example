@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.57</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.58</p>
         
         <br>
         <br>
@@ -42,7 +42,7 @@
                     discoveryDocs: DISCOVERY_DOCS
                 }).then(function () {
                     fetchDataStartSlideshow();
-                    //setInterval(fetchDataStartSlideshow, 5000);
+                    setInterval(fetchDataStartSlideshow, 5000);
                 });
             }
 
@@ -331,42 +331,42 @@
                 if (findIndex(textDataKeys, 'PLATFORM_TOTAL_TIME') != -1) {
                     platformtotaltimeIndex = findIndex(textDataKeys, 'PLATFORM_TOTAL_TIME');
                 }
-                /*
+                
                 for (var i = 0; i < 16; i++) {
                     if (rgg2statsRaw.valueRanges[8].values[0 + i * 3][0] != '0') {
-                        var platform = platforms[i];
+                        platform = platforms[i];
                         if (rgg2statsRaw.valueRanges[17].values[platformbeatenIndex][0] == 'TRUE') {
-                            var number = rgg2statsRaw.valueRanges[8].values[0 + i * 3];
+                            number = rgg2statsRaw.valueRanges[8].values[0 + i * 3];
                             text = rgg2statsRaw.valueRanges[19].values[platformbeatenIndex][0]
                                 .replace('[NUMBER]', number)
                                 .replace('[PLATFORM]', platform);
                             frequency = parseInt(rgg2statsRaw.valueRanges[18].values[platformbeatenIndex][0]);
-                            for (var i = 0; i < frequency; i++) {
+                            for (var j = 0; j < frequency; j++) {
                                 rgg2statsData.push(text);
                             }
                         }
                         if (rgg2statsRaw.valueRanges[17].values[platformaveragetimeIndex][0] == 'TRUE') {
-                            var time = rgg2statsRaw.valueRanges[9].values[1 + i * 3];
+                            time = rgg2statsRaw.valueRanges[9].values[1 + i * 3];
                             text = rgg2statsRaw.valueRanges[19].values[platformaveragetimeIndex][0]
                                 .replace('[PLATFORM]', platform)
                                 .replace('[TIME]', time);
                             frequency = parseInt(rgg2statsRaw.valueRanges[18].values[platformaveragetimeIndex][0]);
-                            for (var i = 0; i < frequency; i++) {
+                            for (var k = 0; k < frequency; k++) {
                                 rgg2statsData.push(text);
                             }
                         }
                         if (rgg2statsRaw.valueRanges[17].values[platformtotaltimeIndex][0] == 'TRUE') {
-                            var time = rgg2statsRaw.valueRanges[9].values[0 + i * 3];
+                            time = rgg2statsRaw.valueRanges[9].values[0 + i * 3];
                             text = rgg2statsRaw.valueRanges[19].values[platformtotaltimeIndex][0]
                                 .replace('[TIME]', time)
                                 .replace('[PLATFORM]', platform);
                             frequency = parseInt(rgg2statsRaw.valueRanges[18].values[platformtotaltimeIndex][0]);
-                            for (var i = 0; i < frequency; i++) {
+                            for (var l = 0; l < frequency; l++) {
                                 rgg2statsData.push(text);
                             }
                         }
                     }
-                }*/
+                }
 
                 // Wheel spins, most occured prize
                 var wheelspinsIndex;
@@ -389,7 +389,7 @@
                             text = rgg2statsRaw.valueRanges[19].values[wheelspinsIndex][0]
                                 .replace('[NUMBER]', number);
                             frequency = parseInt(rgg2statsRaw.valueRanges[18].values[wheelspinsIndex][0]);
-                            for (var i = 0; i < frequency; i++) {
+                            for (var j = 0; j < frequency; j++) {
                                 rgg2statsData.push(text);
                             }
                         }
@@ -398,7 +398,7 @@
                             text = rgg2statsRaw.valueRanges[19].values[mostoccuredprizeIndex][0]
                                 .replace('[WHEELRESULT]', mostOccured);
                             frequency = parseInt(rgg2statsRaw.valueRanges[18].values[mostoccuredprizeIndex][0]);
-                            for (var i = 0; i < frequency; i++) {
+                            for (var k = 0; k < frequency; k++) {
                                 rgg2statsData.push(text);
                             }
                         }
@@ -457,7 +457,7 @@
                         }
                     }
                 }
-        
+
                 // Gather them all
                 rebuildFinalList();
             }

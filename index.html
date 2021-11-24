@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.26</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.27</p>
         
         <br>
         <br>
@@ -178,18 +178,19 @@
                 // Empty arrays
                 rgg2statsData = [];
 
-                // Build arrays
+                // Reused variables
                 var text = '';
-                var beatenIndex;
+                var frequency = 1;
 
                 // Beaten
+                var beatenIndex;
                 if (findIndex(textDataKeys, 'TOTAL_BEATEN') != -1) {
                     beatenIndex = findIndex(textDataKeys, 'TOTAL_BEATEN');
                 }
                 if (rgg2statsRaw.valueRanges[0].values[0][0] != '0' &&
                     rgg2statsRaw.valueRanges[17].values[beatenIndex][0] == 'TRUE') {
                     text = rgg2statsRaw.valueRanges[19].values[beatenIndex][0].replace('[NUMBER]', rgg2statsRaw.valueRanges[0].values[0][0]);
-                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[beatenIndex][0]);
+                    frequency = parseInt(rgg2statsRaw.valueRanges[18].values[beatenIndex][0]);
                     for (var i = 0; i < frequency; i++) {
                         rgg2statsData.push(text);
                     }
@@ -203,7 +204,7 @@
                 if (rgg2statsRaw.valueRanges[0].values[1][0] != '0' &&
                     rgg2statsRaw.valueRanges[17].values[droppedIndex][0] == 'TRUE') {
                     text = rgg2statsRaw.valueRanges[19].values[droppedIndex][0].replace('[NUMBER]', rgg2statsRaw.valueRanges[0].values[1][0]);
-                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[droppedIndex][0]);
+                    frequency = parseInt(rgg2statsRaw.valueRanges[18].values[droppedIndex][0]);
                     for (var i = 0; i < frequency; i++) {
                         rgg2statsData.push(text);
                     }
@@ -217,7 +218,7 @@
                 if (rgg2statsRaw.valueRanges[0].values[2][0] != '0' &&
                     rgg2statsRaw.valueRanges[17].values[rerolledIndex][0] == 'TRUE') {
                     text = rgg2statsRaw.valueRanges[19].values[rerolledIndex][0].replace('[NUMBER]', rgg2statsRaw.valueRanges[0].values[2][0]);
-                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[rerolledIndex][0]);
+                    frequency = parseInt(rgg2statsRaw.valueRanges[18].values[rerolledIndex][0]);
                     for (var i = 0; i < frequency; i++) {
                         rgg2statsData.push(text);
                     }
@@ -231,7 +232,7 @@
                 if (rgg2statsRaw.valueRanges[0].values[3][0] != '0' &&
                     rgg2statsRaw.valueRanges[17].values[SSSIndex][0] == 'TRUE') {
                     text = rgg2statsRaw.valueRanges[19].values[SSSIndex][0].replace('[NUMBER]', rgg2statsRaw.valueRanges[0].values[3][0]);
-                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[SSSIndex][0]);
+                    frequency = parseInt(rgg2statsRaw.valueRanges[18].values[SSSIndex][0]);
                     for (var i = 0; i < frequency; i++) {
                         rgg2statsData.push(text);
                     }
@@ -246,7 +247,7 @@
                     rgg2statsRaw.valueRanges[17].values[totaltimeIndex][0] == 'TRUE') {
                     var time = formatTime(rgg2statsRaw.valueRanges[1].values[0], true, true, true);
                     text = rgg2statsRaw.valueRanges[19].values[totaltimeIndex][0].replace('[TIME]', time);
-                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[totaltimeIndex][0]);
+                    frequency = parseInt(rgg2statsRaw.valueRanges[18].values[totaltimeIndex][0]);
                     for (var i = 0; i < frequency; i++) {
                         rgg2statsData.push(text);
                     }
@@ -261,7 +262,7 @@
                     rgg2statsRaw.valueRanges[17].values[averagetimeIndex][0] == 'TRUE') {
                     var time = formatTime(rgg2statsRaw.valueRanges[1].values[1][0], true, true, true);
                     text = rgg2statsRaw.valueRanges[19].values[averagetimeIndex][0].replace('[TIME]', time);
-                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[averagetimeIndex][0]);
+                    frequency = parseInt(rgg2statsRaw.valueRanges[18].values[averagetimeIndex][0]);
                     for (var i = 0; i < frequency; i++) {
                         rgg2statsData.push(text);
                     }
@@ -281,7 +282,7 @@
                         .replace('[GAME]', game)
                         .replace('[PLATFORM]', platform)
                         .replace('[TIME]', time);
-                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[longestgameIndex][0]);
+                    frequency = parseInt(rgg2statsRaw.valueRanges[18].values[longestgameIndex][0]);
                     for (var i = 0; i < frequency; i++) {
                         rgg2statsData.push(text);
                     }
@@ -301,7 +302,7 @@
                         .replace('[GAME]', game)
                         .replace('[PLATFORM]', platform)
                         .replace('[TIME]', time);
-                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[shortestgameIndex][0]);
+                    frequency = parseInt(rgg2statsRaw.valueRanges[18].values[shortestgameIndex][0]);
                     for (var i = 0; i < frequency; i++) {
                         rgg2statsData.push(text);
                     }
@@ -329,7 +330,7 @@
                             text = rgg2statsRaw.valueRanges[19].values[platformbeatenIndex][0]
                                 .replace('[NUMBER]', number)
                                 .replace('[PLATFORM]', platform);
-                            var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[platformbeatenIndex][0]);
+                            frequency = parseInt(rgg2statsRaw.valueRanges[18].values[platformbeatenIndex][0]);
                             for (var i = 0; i < frequency; i++) {
                                 rgg2statsData.push(text);
                             }
@@ -339,7 +340,7 @@
                             text = rgg2statsRaw.valueRanges[19].values[platformaveragetimeIndex][0]
                                 .replace('[PLATFORM]', platform)
                                 .replace('[TIME]', time);
-                            var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[platformaveragetimeIndex][0]);
+                            frequency = parseInt(rgg2statsRaw.valueRanges[18].values[platformaveragetimeIndex][0]);
                             for (var i = 0; i < frequency; i++) {
                                 rgg2statsData.push(text);
                             }
@@ -349,7 +350,7 @@
                             text = rgg2statsRaw.valueRanges[19].values[platformtotaltimeIndex][0]
                                 .replace('[TIME]', time)
                                 .replace('[PLATFORM]', platform);
-                            var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[platformtotaltimeIndex][0]);
+                            frequency = parseInt(rgg2statsRaw.valueRanges[18].values[platformtotaltimeIndex][0]);
                             for (var i = 0; i < frequency; i++) {
                                 rgg2statsData.push(text);
                             }
@@ -382,7 +383,7 @@
                         if (rgg2statsRaw.valueRanges[17].values[wheelspinsIndex][0] == 'TRUE') {
                             text = rgg2statsRaw.valueRanges[19].values[wheelspinsIndex][0]
                                 .replace('[NUMBER]', numberOfSpins);
-                            var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[wheelspinsIndex][0]);
+                            frequency = parseInt(rgg2statsRaw.valueRanges[18].values[wheelspinsIndex][0]);
                             for (var i = 0; i < frequency; i++) {
                                 rgg2statsData.push(text);
                             }
@@ -391,7 +392,7 @@
                             var mostOccured = mode(spinTypes);
                             text = rgg2statsRaw.valueRanges[19].values[mostoccuredprizeIndex][0]
                                 .replace('[WHEELRESULT]', mostOccured);
-                            var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[mostoccuredprizeIndex][0]);
+                            frequency = parseInt(rgg2statsRaw.valueRanges[18].values[mostoccuredprizeIndex][0]);
                             for (var i = 0; i < frequency; i++) {
                                 rgg2statsData.push(text);
                             }
@@ -411,7 +412,7 @@
                     text = rgg2statsRaw.valueRanges[19].values[inventoryIndex][0]
                                 .replace('[NUMBER]', numberOfHints)
                                 .replace('[NUMBER2]', numberOfPotions);
-                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[inventoryIndex][0]);
+                    frequency = parseInt(rgg2statsRaw.valueRanges[18].values[inventoryIndex][0]);
                     for (var i = 0; i < frequency; i++) {
                         rgg2statsData.push(text);
                     }
@@ -432,7 +433,7 @@
                                 .replace('[TIME]', time)
                                 .replace('[DATE]', rggdate1)
                                 .replace('[DATE2]', rggdate2);
-                    var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[rgg1statsIndex][0]);
+                    frequency = parseInt(rgg2statsRaw.valueRanges[18].values[rgg1statsIndex][0]);
                     for (var i = 0; i < frequency; i++) {
                         rgg2statsData.push(text);
                     }
@@ -461,7 +462,7 @@
                 for (var i = 0; i < novotIndexes.length; i++) {
                     if (rgg2statsRaw.valueRanges[17].values[novotIndexes[i]][0] == 'TRUE') {
                         text = rgg2statsRaw.valueRanges[19].values[novotIndexes[i]][0];
-                        var frequency = parseInt(rgg2statsRaw.valueRanges[18].values[novotIndexes[i]][0]);
+                        frequency = parseInt(rgg2statsRaw.valueRanges[18].values[novotIndexes[i]][0]);
                         for (var i = 0; i < frequency; i++) {
                             rgg2statsData.push(text);
                         }

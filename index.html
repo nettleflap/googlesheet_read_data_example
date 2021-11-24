@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.23</p>
+        <p class="title">TMR RGG2 INFO SLIDESHOW v1.0.24</p>
         
         <br>
         <br>
@@ -456,7 +456,7 @@
                 // No variable only text entries
                 var novotIndexes = [];
                 if (findIndex(textDataKeys, 'NO_VARIABLE_ONLY_TEXT') != -1) {
-                    novotIndexes.push(findIndexes(textDataKeys, 'RGG1_STATS'));
+                    novotIndexes.push(findIndexes(textDataKeys, 'NO_VARIABLE_ONLY_TEXT'));
                 }
                 for (var i = 0; i < novotIndexes.length; i++) {
                     if (rgg2statsRaw.valueRanges[17].values[novotIndexes[i]][0] == 'TRUE') {
@@ -541,73 +541,6 @@
                 }
                 return maxEl;
             }
-      
-            function setGamesCompleted() {
-                var text = 'Games beaten: ' + rgg2statsRaw.valueRanges[0].values[0];
-                addRemoveFromDataArray(true, rgg2statsData, text);
-                rebuildFinalList();
-            }
-      
-            function setGamesDropped() {
-                var text = 'Games dropped: ' + rgg2statsRaw.valueRanges[0].values[1];
-	            addRemoveFromDataArray(true, rgg2statsData, text);
-                rebuildFinalList();
-            }
-      
-            function setGamesRerolled() {
-                var text = 'Games rerolled: ' + rgg2statsRaw.valueRanges[0].values[2];
-	            addRemoveFromDataArray(true, rgg2statsData, text);
-                rebuildFinalList();
-            }
-      
-            function setGamesDollar() {
-                var text = 'Games $$$: ' + rgg2statsRaw.valueRanges[0].values[3];
-	            addRemoveFromDataArray(true, rgg2statsData, text);
-                rebuildFinalList();
-            }
-      
-            function setTotalTime() {
-                var text = 'Total time spent: ' + rgg2statsRaw.valueRanges[1].values[0];
-	            addRemoveFromDataArray(true, rgg2statsData, text);
-                rebuildFinalList();
-            }
-      
-            function setAverageTime() {
-                var text = 'Average time spent on a beaten game: ' + rgg2statsRaw.valueRanges[1].values[1];
-	            addRemoveFromDataArray(true, rgg2statsData, text);
-                rebuildFinalList();
-            }
-      
-            function setLongestGame() {
-                var text = rgg2statsRaw.valueRanges[2].values[0] + ' (' + rgg2statsRaw.valueRanges[4].values[0] + ') was the longest game to beat with a time of ' + rgg2statsRaw.valueRanges[3].values[0] + '!';
-	            addRemoveFromDataArray(true, rgg2statsData, text);
-                rebuildFinalList();
-            }
-      
-            function setShortestGame() {
-                var text = rgg2statsRaw.valueRanges[5].values[0] + ' (' + rgg2statsRaw.valueRanges[7].values[0] + ') was the shortest game to beat with a time of ' + rgg2statsRaw.valueRanges[6].values[0] + '!';
-	            addRemoveFromDataArray(true, rgg2statsData, text);
-                rebuildFinalList();
-            }
-
-            function setPlatformSpecifics() {
-                var platforms = ['DOS','C64','NES','MSX','SMS','Amiga','TG-16','Genesis','GBC','Game Gear','SNES','Neo Geo','PS1','N64','GBA','SUB'];
-                for (var i = 0; i < 16; i++) {
-                    var text = rgg2statsRaw.valueRanges[8].values[0 + i*3] + ' ' + platforms[i] + ' games were beaten. A(n) ' + platforms[i] + ' game took ' + rgg2statsRaw.valueRanges[9].values[1 + i*3] + ' on average. ' + rgg2statsRaw.valueRanges[9].values[0 + i*3] + ' spent on ' + platforms[i] + ' games in total.';
-	                addRemoveFromDataArray(true, rgg2statsData, text);
-                }
-                rebuildFinalList();
-            }
-      
-            function setSpins(){
-                var text = 'Wheel was spun ' + rgg2statsRaw.valueRanges[10].values.length + ' times! <i>Right round baby right round!</i>';
-	            addRemoveFromDataArray(true, rgg2statsData, text);
-                rebuildFinalList();
-            }
-      
-            // the person who spun the wheel most times
-            // wheel spin result least
-            // inventory stats
       
             function addRemoveFromDataArray(check, array, text){
                 if (check == true) {
